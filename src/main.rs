@@ -68,7 +68,7 @@ enum SubCommand {
 
 fn main() {
     let opts: Opts = Opts::parse();
-    match opts.subcmd {
+    let res = match opts.subcmd {
         SubCommand::Add(a) => add::command(a),
         SubCommand::Connect(a) => connect::command(a),
         SubCommand::Delete(a) => delete::command(a),
@@ -89,5 +89,14 @@ fn main() {
         SubCommand::Variables(a) => variables::command(a),
         SubCommand::Version(a) => version::command(a),
         SubCommand::Whoami(a) => whoami::command(a),
+    };
+    let cmd_name = std::env::args().nth(1);
+    match cmd_name {
+        Some(name) => 
+            match res {
+                Err(s) => println!("Error in command \'{}\': {}", name, s),
+                _ => (),
+            },
+        _ => (),
     }
 }

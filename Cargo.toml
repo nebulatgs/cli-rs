@@ -10,3 +10,6 @@ edition = "2021"
 
 [dependencies]
 clap = {git = "https://github.com/clap-rs/clap", features = ["derive", "suggestions"]}
+ignore = "0.4.18"
+flate2 = "1.0.22"
+tar = "*"

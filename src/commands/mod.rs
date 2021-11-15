@@ -18,3 +18,5 @@ pub mod unlink;
 pub mod up;
 pub mod variables;
 pub mod whoami;
+
+type CommandResult = Result<(), Box<dyn std::error::Error>>;
