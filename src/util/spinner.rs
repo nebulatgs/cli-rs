@@ -4,12 +4,9 @@
 //     is_cancelled: bool,
 // }
 
-use std::{io::Write, thread, time::Duration};
+use std::time::Duration;
 
-use futures::{
-	future::{AbortHandle, Abortable},
-	Future,
-};
+use futures::future::{AbortHandle, Abortable};
 use tokio::task::JoinHandle;
 
 // impl CancellationToken {
@@ -31,7 +28,7 @@ pub fn get_spinner_future() -> (AbortHandle, Abortable<JoinHandle<()>>) {
 	);
 	(abort_handle, spinner_future)
 }
-async fn start_spinner() -> () {
+async fn start_spinner() {
 	// let mut stdout = std::io::stdout();
 	loop {
 		// stdout.write(b"buf")?;
