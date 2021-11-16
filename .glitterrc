@@ -1,0 +1,20 @@
+{
+    "custom_tasks": [
+        {
+            "name": "fmt",
+            "execute": [
+                "cargo fmt"
+            ]
+        },
+        {
+            "name": "lint",
+            "execute": [
+                "cargo lint"
+            ]
+        }
+    ],
+    "hooks": [
+        "fmt",
+        "lint"
+    ]
+}

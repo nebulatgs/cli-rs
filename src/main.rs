@@ -94,11 +94,9 @@ async fn main() {
 		SubCommand::Whoami(a) => whoami::command(a).await,
 	};
 	let cmd_name = std::env::args().nth(1);
-	match cmd_name {
-		Some(name) => match res {
-			Err(s) => eprintln!("Error in command \'{}\': {}", name, s),
-			_ => (),
-		},
-		_ => (),
+	if let Some(name) = cmd_name {
+		if let Err(s) = res {
+			eprintln!("Error in command \'{}\': {}", name, s)
+		}
 	}
 }
