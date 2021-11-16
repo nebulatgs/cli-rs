@@ -3,6 +3,7 @@ use clap::Parser;
 #[derive(Parser)]
 pub struct Args;
 
-pub fn command(args: Args) -> super::CommandResult {
+pub async fn command(args: Args) -> super::CommandResult {
+panic!();
     todo!("List command used!");
 }

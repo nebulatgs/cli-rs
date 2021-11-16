@@ -1,4 +1,6 @@
 pub mod commands;
+pub mod util;
+
 use clap::{AppSettings, ColorChoice, Parser};
 use commands::*;
 
@@ -66,35 +68,36 @@ enum SubCommand {
     Whoami(whoami::Args),
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let opts: Opts = Opts::parse();
     let res = match opts.subcmd {
-        SubCommand::Add(a) => add::command(a),
-        SubCommand::Connect(a) => connect::command(a),
-        SubCommand::Delete(a) => delete::command(a),
-        SubCommand::Docs(a) => docs::command(a),
-        SubCommand::Environment(a) => environment::command(a),
-        SubCommand::Init(a) => init::command(a),
-        SubCommand::Link(a) => link::command(a),
-        SubCommand::List(a) => list::command(a),
-        SubCommand::Login(a) => login::command(a),
-        SubCommand::Logout(a) => logout::command(a),
-        SubCommand::Logs(a) => logs::command(a),
-        SubCommand::Open(a) => open::command(a),
-        SubCommand::Protect(a) => protect::command(a),
-        SubCommand::Run(a) => run::command(a),
-        SubCommand::Status(a) => status::command(a),
-        SubCommand::Unlink(a) => unlink::command(a),
-        SubCommand::Up(a) => up::command(a),
-        SubCommand::Variables(a) => variables::command(a),
-        SubCommand::Version(a) => version::command(a),
-        SubCommand::Whoami(a) => whoami::command(a),
+        SubCommand::Add(a) => add::command(a).await,
+        SubCommand::Connect(a) => connect::command(a).await,
+        SubCommand::Delete(a) => delete::command(a).await,
+        SubCommand::Docs(a) => docs::command(a).await,
+        SubCommand::Environment(a) => environment::command(a).await,
+        SubCommand::Init(a) => init::command(a).await,
+        SubCommand::Link(a) => link::command(a).await,
+        SubCommand::List(a) => list::command(a).await,
+        SubCommand::Login(a) => login::command(a).await,
+        SubCommand::Logout(a) => logout::command(a).await,
+        SubCommand::Logs(a) => logs::command(a).await,
+        SubCommand::Open(a) => open::command(a).await,
+        SubCommand::Protect(a) => protect::command(a).await,
+        SubCommand::Run(a) => run::command(a).await,
+        SubCommand::Status(a) => status::command(a).await,
+        SubCommand::Unlink(a) => unlink::command(a).await,
+        SubCommand::Up(a) => up::command(a).await,
+        SubCommand::Variables(a) => variables::command(a).await,
+        SubCommand::Version(a) => version::command(a).await,
+        SubCommand::Whoami(a) => whoami::command(a).await,
     };
     let cmd_name = std::env::args().nth(1);
     match cmd_name {
         Some(name) => 
             match res {
-                Err(s) => println!("Error in command \'{}\': {}", name, s),
+                Err(s) => eprintln!("Error in command \'{}\': {}", name, s),
                 _ => (),
             },
         _ => (),
