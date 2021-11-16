@@ -4,5 +4,5 @@ use clap::Parser;
 pub struct Args;
 
 pub async fn command(args: Args) -> super::CommandResult {
-    todo!("Environment command used!");
+	todo!("Environment command used!");
 }

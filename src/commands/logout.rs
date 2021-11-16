@@ -4,5 +4,5 @@ use clap::Parser;
 pub struct Args;
 
 pub async fn command(args: Args) -> super::CommandResult {
-    todo!("Logout command used!");
+	todo!("Logout command used!");
 }
