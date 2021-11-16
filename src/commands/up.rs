@@ -21,7 +21,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 		.from_writer(SynchronizedWriter::new(arc.clone()));
 	{
 		let mut archive = Builder::new(&mut parz);
-		let mut builder = WalkBuilder::new(args.dir.unwrap_or(".".to_string()));
+		let mut builder = WalkBuilder::new(args.dir.unwrap_or_else(|| ".".to_string()));
 		let walker = builder.follow_links(true).hidden(false);
 		let walked = walker.build().collect::<Vec<_>>();
 		let pg = ProgressBar::new(walked.len() as u64).with_message("Compressing");
