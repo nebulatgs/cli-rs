@@ -4,5 +4,5 @@ use clap::Parser;
 pub struct Args;
 
 pub async fn command(args: Args) -> super::CommandResult {
-    todo!("Connect command used!");
+	todo!("Connect command used!");
 }
