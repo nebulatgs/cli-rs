@@ -1,7 +1,7 @@
-pub static TRAIN_EMOJIS: &'static [char; 11] = &[
+pub static TRAIN_EMOJIS: &[char; 11] = &[
 	'🚝', '🚅', '🚄', '🚇', '🚞', '🚈', '🚉', '🚂', '🚃', '🚊', '🚋',
 ];
-pub static TRAIN_LEFT: &'static [&str; 9] = &[
+pub static TRAIN_LEFT: &[&str; 9] = &[
 	"       🚅",
 	"      🚅🚋",
 	"     🚅🚋🚋",
@@ -13,7 +13,7 @@ pub static TRAIN_LEFT: &'static [&str; 9] = &[
 	"🚅🚋🚋🚋🚋🚋🚋🚋🚋",
 ];
 
-pub static TRAIN_RIGHT: &'static [&str; 9] = &[
+pub static TRAIN_RIGHT: &[&str; 9] = &[
 	"🚅",
 	"🚅🚋",
 	"🚅🚋🚋",
