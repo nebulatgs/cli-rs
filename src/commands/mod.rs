@@ -19,4 +19,4 @@ pub mod variables;
 pub mod version;
 pub mod whoami;
 
-type CommandResult = Result<(), Box<dyn std::error::Error>>;
+type CommandResult = Result<(), Box<dyn std::error::Error + Send + Sync>>;

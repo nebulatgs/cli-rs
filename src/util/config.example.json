@@ -1,0 +1,17 @@
+{
+    "projects": {
+        "/some/path/here": {
+            "projectPath": "/some/path/here",
+            "project": "<project id>",
+            "environment": "<environment id>"
+        },
+        "/another/path/here": {
+            "projectPath": "/another/path/here",
+            "project": "<project id>",
+            "environment": "<environment id>"
+        }
+    },
+    "user": {
+        "token": "<token goes here>"
+    }
+}

@@ -1,4 +1,5 @@
 pub mod commands;
+pub mod gql;
 pub mod util;
 
 use clap::{AppSettings, ColorChoice, Parser};

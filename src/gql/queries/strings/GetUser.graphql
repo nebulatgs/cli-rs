@@ -1,0 +1,8 @@
+query GetUser {
+    me {
+        id,
+        email,
+        name,
+        has2FA
+    }
+}

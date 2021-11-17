@@ -1,0 +1,3 @@
+mutation ConsumeLoginSession($code: String!) { 
+    consumeLoginSession(code: $code)
+}

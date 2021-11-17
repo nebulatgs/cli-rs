@@ -1,7 +1,7 @@
-pub static TRAIN_EMOJIS: &[char; 11] = &[
+pub const TRAIN_EMOJIS: &[char; 11] = &[
 	'🚝', '🚅', '🚄', '🚇', '🚞', '🚈', '🚉', '🚂', '🚃', '🚊', '🚋',
 ];
-pub static TRAIN_LEFT: &[&str; 9] = &[
+pub const TRAIN_LEFT: &[&str; 9] = &[
 	"       🚅",
 	"      🚅🚋",
 	"     🚅🚋🚋",
@@ -13,7 +13,7 @@ pub static TRAIN_LEFT: &[&str; 9] = &[
 	"🚅🚋🚋🚋🚋🚋🚋🚋🚋",
 ];
 
-pub static TRAIN_RIGHT: &[&str; 9] = &[
+pub const TRAIN_RIGHT: &[&str; 9] = &[
 	"🚅",
 	"🚅🚋",
 	"🚅🚋🚋",
@@ -24,3 +24,5 @@ pub static TRAIN_RIGHT: &[&str; 9] = &[
 	"🚅🚋🚋🚋🚋🚋🚋🚋",
 	"🚅🚋🚋🚋🚋🚋🚋🚋🚋",
 ];
+
+pub const RAILWAY_URL: &str = "https://railway.app";

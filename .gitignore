@@ -14,4 +14,4 @@ Cargo.lock
 
 /target
 
-src/config/schema.json
+src/gql/schema.graphql
