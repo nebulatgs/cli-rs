@@ -72,12 +72,10 @@ impl Configs {
 		Ok(env == "develop")
 	}
 	pub fn get_railway_url() -> String {
-		let env = std::env::var("RAILWAY_URL").unwrap_or(super::consts::RAILWAY_URL.to_string());
-		env
+		std::env::var("RAILWAY_URL").unwrap_or_else(|_| super::consts::RAILWAY_URL.to_string())
 	}
 	pub fn get_railway_token() -> Option<String> {
-		let env = std::env::var("RAILWAY_TOKEN").ok();
-		env
+		std::env::var("RAILWAY_TOKEN").ok()
 	}
 	pub fn get_host() -> String {
 		let mut base_url = "https://backboard.railway.app";

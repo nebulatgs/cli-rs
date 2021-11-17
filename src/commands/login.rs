@@ -59,8 +59,8 @@ pub async fn command(args: Args) -> super::CommandResult {
 }
 
 async fn browserless_login(
-	url: &String,
-	hostname: &String,
+	url: &str,
+	hostname: &str,
 	config: &mut Configs,
 ) -> super::CommandResult {
 	let client = GQLClient::new_unauthorized()?;

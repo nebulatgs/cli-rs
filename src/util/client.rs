@@ -12,7 +12,7 @@ impl GQLClient {
 		} else if let Some(token) = &configs.root_config.user.token {
 			headers.insert("authorization", format!("Bearer {}", token).parse()?);
 		} else {
-			Err("Failed to authorize request")?;
+			return Err("Failed to authorize request".into());
 		}
 		headers.insert("x-source", "cli-rs".parse()?);
 		let client = Client::builder()
