@@ -8,7 +8,8 @@ use tokio::{
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Project {
-	pub projectPath: String,
+	#[serde(rename = "projectPath")]
+	pub project_path: String,
 	pub project: String,
 	pub environment: String,
 }
