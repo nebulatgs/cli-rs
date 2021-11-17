@@ -7,7 +7,7 @@ pub struct GQLClient;
 impl GQLClient {
 	pub fn new_authorized(configs: &Configs) -> super::UtilResult<Client> {
 		let mut headers = HeaderMap::new();
-		if let Some(token) = &configs.root_config.railway_token {
+		if let Some(token) = &Configs::get_railway_token() {
 			headers.insert("project-access-token", token.parse()?);
 		} else if let Some(token) = &configs.root_config.user.token {
 			headers.insert("authorization", format!("Bearer {}", token).parse()?);

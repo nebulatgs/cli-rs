@@ -22,7 +22,6 @@ pub struct User {
 pub struct RailwayConfig {
 	pub projects: HashMap<String, Project>,
 	pub user: User,
-	pub railway_token: Option<String>,
 }
 
 #[derive(Debug)]
@@ -45,14 +44,22 @@ impl Configs {
 		let home_dir = dirs::home_dir().ok_or("Unable to get home directory")?;
 		let root_config_path = std::path::Path::new(&home_dir).join(root_config_partial_path);
 
-		let mut file = File::open(&root_config_path).await?;
-		let mut serialized_config = vec![];
-		file.read_to_end(&mut serialized_config).await?;
+		if let Ok(mut file) = File::open(&root_config_path).await {
+			let mut serialized_config = vec![];
+			file.read_to_end(&mut serialized_config).await?;
 
-		let root_config: RailwayConfig = serde_json::from_slice(&serialized_config)?;
+			let root_config: RailwayConfig = serde_json::from_slice(&serialized_config)?;
+			return Ok(Self {
+				root_config,
+				root_config_path,
+			});
+		}
 		Ok(Self {
-			root_config,
 			root_config_path,
+			root_config: RailwayConfig {
+				projects: HashMap::new(),
+				user: User { token: None },
+			},
 		})
 	}
 	pub fn is_staging_mode() -> super::UtilResult<bool> {
@@ -63,9 +70,13 @@ impl Configs {
 		let env = std::env::var("RAILWAY_ENV")?;
 		Ok(env == "develop")
 	}
-	pub fn get_railway_url() -> super::UtilResult<String> {
+	pub fn get_railway_url() -> String {
 		let env = std::env::var("RAILWAY_URL").unwrap_or(super::consts::RAILWAY_URL.to_string());
-		Ok(env)
+		env
+	}
+	pub fn get_railway_token() -> Option<String> {
+		let env = std::env::var("RAILWAY_TOKEN").ok();
+		env
 	}
 	pub fn get_host() -> String {
 		let mut base_url = "https://backboard.railway.app";
@@ -79,7 +90,7 @@ impl Configs {
 		base_url.to_string()
 	}
 	pub async fn write(&self) -> super::UtilResult<()> {
-		let mut file = File::open(&self.root_config_path).await?;
+		let mut file = File::create(&self.root_config_path).await?;
 		let serialized_config = serde_json::to_vec_pretty(&self.root_config)?;
 		file.write_buf(&mut serialized_config.as_slice()).await?;
 		file.sync_all().await?;

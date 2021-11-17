@@ -18,7 +18,7 @@ pub struct Args {
 
 pub async fn command(args: Args) -> super::CommandResult {
 	let mut config = Configs::new().await?;
-	let url = Configs::get_railway_url()?;
+	let url = Configs::get_railway_url();
 	println!("Press Enter to open the browser (^C to quit)");
 	stdin().read_line(&mut String::new())?;
 	let hostname = hostname::get()?
