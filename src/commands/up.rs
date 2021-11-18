@@ -26,6 +26,7 @@ pub struct Args {
 	)]
 	detach: Option<Option<bool>>,
 	#[clap(short, long, about = "Specify an environment to up onto")]
+	#[allow(clippy::option_option)]
 	environment: Option<String>,
 }
 
