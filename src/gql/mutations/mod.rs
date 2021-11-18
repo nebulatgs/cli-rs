@@ -23,3 +23,11 @@ pub struct CreateLoginSession;
 	response_derives = "Debug"
 )]
 pub struct Logout;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+	schema_path = "src/gql/schema.graphql",
+	query_path = "src/gql/mutations/strings/DeleteProject.graphql",
+	response_derives = "Debug"
+)]
+pub struct DeleteProject;

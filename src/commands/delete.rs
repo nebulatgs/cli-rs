@@ -2,6 +2,8 @@ use clap::Parser;
 use colored::Colorize;
 
 use crate::{
+	gql::mutations::delete_project,
+	gql::mutations::DeleteProject,
 	gql::queries::get_projects,
 	gql::queries::GetProjects,
 	util::{client::post_graphql, client::GQLClient, config::Configs, errors::RailwayError},
@@ -72,6 +74,18 @@ pub async fn command(args: Args) -> super::CommandResult {
 			config.root_config.projects.remove(&key);
 			config.write().await?;
 		}
+
+		let client = GQLClient::new_authorized(&config)?;
+		let res = post_graphql::<DeleteProject, _>(
+			&client,
+			format!("{}/graphql", Configs::get_host()),
+			delete_project::Variables {
+				project_id: project.id.clone(),
+			},
+		)
+		.await?;
+		res.data.ok_or("Failed to retrieve response body")?;
+
 		println!("🗑️  Deleted project {}", project.name.purple());
 	} else {
 		println!("Not deleting project {}", project.name.purple());
