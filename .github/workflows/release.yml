@@ -18,7 +18,7 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: x86_64-pc-windows-gnu
-            linker: gcc-mingw-w64-x86-64-win32
+            linker: gcc-mingw-w64
             cross: true
           - build: arm-v7
             os: ubuntu-latest
