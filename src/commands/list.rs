@@ -1,5 +1,5 @@
+use crate::util::client::post_graphql;
 use clap::Parser;
-use graphql_client::reqwest::post_graphql;
 
 use crate::{
 	gql::queries::get_projects,

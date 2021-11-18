@@ -1,5 +1,4 @@
 use clap::Parser;
-use graphql_client::reqwest::post_graphql;
 use ignore::WalkBuilder;
 use std::sync::{Arc, Mutex};
 use synchronized_writer::SynchronizedWriter;
@@ -11,7 +10,7 @@ use tar::Builder;
 use crate::{
 	gql::queries::get_project,
 	gql::queries::GetProject,
-	util::{client::GQLClient, config::Configs, errors::RailwayError},
+	util::{client::post_graphql, client::GQLClient, config::Configs, errors::RailwayError},
 };
 
 #[derive(Parser)]

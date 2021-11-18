@@ -1,11 +1,10 @@
 use clap::Parser;
 use colored::Colorize;
-use graphql_client::reqwest::post_graphql;
 
 use crate::{
 	gql::queries::get_projects,
 	gql::queries::GetProjects,
-	util::{client::GQLClient, config::Configs, errors::RailwayError},
+	util::{client::post_graphql, client::GQLClient, config::Configs, errors::RailwayError},
 };
 use dialoguer::{theme::ColorfulTheme, Confirm, FuzzySelect};
 
