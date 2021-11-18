@@ -1,0 +1,14 @@
+query GetProject ($projectId: ID!) {
+  projectById(projectId: $projectId) {
+    id
+    name
+    plugins {
+      id
+      name
+    }
+    environments {
+      id
+      name
+    }
+  }
+}

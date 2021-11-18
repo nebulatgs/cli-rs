@@ -106,6 +106,9 @@ async fn main() {
 				RailwayError::Unauthorized => {
 					eprintln!("{}", s)
 				}
+				RailwayError::NotLinked => {
+					eprintln!("{}", s)
+				}
 				_ => {
 					eprintln!("Error in command \'{}\': {}", name, s)
 				}
