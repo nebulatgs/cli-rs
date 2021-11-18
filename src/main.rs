@@ -5,15 +5,14 @@ pub mod util;
 use clap::{AppSettings, ColorChoice, Parser};
 use commands::*;
 
-use crate::util::errors::RailwayError;
-
+use crate::util::{consts, errors::RailwayError};
 /// Interact with 🚅 Railway via CLI
 /// Deploy infrastructure, instantly. Docs: https://docs.railway.app
 #[derive(Parser)]
 #[clap(
     color = ColorChoice::Never,
     name = "Railway CLI",
-    version = "0.0.0",
+    version = consts::VERSION,
     verbatim_doc_comment,
     setting = AppSettings::SubcommandRequiredElseHelp,
     after_help = "Use \"railway [command] --help\" for more information about a command."

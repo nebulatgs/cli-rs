@@ -3,7 +3,7 @@ use reqwest::{
 	Client,
 };
 
-use super::{config::Configs, errors::RailwayError};
+use super::{config::Configs, consts, errors::RailwayError};
 
 pub struct GQLClient;
 
@@ -25,7 +25,7 @@ impl GQLClient {
 		}
 		headers.insert("x-source", HeaderValue::from_static("cli-rs"));
 		let client = Client::builder()
-			.user_agent("cli-rs/0.0.0")
+			.user_agent(consts::get_user_agent())
 			.default_headers(headers)
 			.build()?;
 		Ok(client)
@@ -34,7 +34,7 @@ impl GQLClient {
 		let mut headers = HeaderMap::new();
 		headers.insert("x-source", HeaderValue::from_static("cli-rs"));
 		let client = Client::builder()
-			.user_agent("cli-rs/0.0.0")
+			.user_agent(consts::get_user_agent())
 			.default_headers(headers)
 			.build()?;
 		Ok(client)

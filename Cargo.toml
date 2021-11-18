@@ -3,7 +3,7 @@ name = "railway"
 repository = "https://github.com/nebulatgs/cli-rs/"
 description = "Develop and deploy code with zero configuration"
 license = "MIT"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

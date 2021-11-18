@@ -5,11 +5,7 @@ use graphql_client::reqwest::post_graphql;
 use crate::{
 	gql::queries::get_projects,
 	gql::queries::GetProjects,
-	util::{
-		client::GQLClient,
-		config::{Configs, Project},
-		errors::RailwayError,
-	},
+	util::{client::GQLClient, config::Configs, errors::RailwayError},
 };
 use dialoguer::{theme::ColorfulTheme, Confirm, FuzzySelect};
 
