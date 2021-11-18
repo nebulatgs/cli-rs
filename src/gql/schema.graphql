@@ -1,0 +1,3572 @@
+# Exposes a URL that specifies the behaviour of this scalar.
+directive @specifiedBy(
+  # The URL that specifies the behaviour of this scalar.
+  url: String!
+) on SCALAR
+type AccessRule {
+  allowed: Boolean!
+  message: String
+}
+
+type BanReasonHistory {
+  id: String!
+  createdAt: DateTime!
+  banReason: String
+  actor: User
+}
+
+input BanReasonHistoryListRelationFilter {
+  every: BanReasonHistoryWhereInput
+  some: BanReasonHistoryWhereInput
+  none: BanReasonHistoryWhereInput
+}
+
+input BanReasonHistoryOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input BanReasonHistoryWhereInput {
+  AND: [BanReasonHistoryWhereInput!]
+  OR: [BanReasonHistoryWhereInput!]
+  NOT: [BanReasonHistoryWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  banReason: StringNullableFilter
+  user: UserWhereInput
+  userId: StringFilter
+  actor: UserWhereInput
+  actorId: StringNullableFilter
+}
+
+# The `BigInt` scalar type represents non-fractional signed whole numeric values.
+# BigInt can represent values between -(2^53) + 1 and 2^53 - 1.
+scalar BigInt
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input BoolNullableFilter {
+  equals: Boolean
+  not: NestedBoolNullableFilter
+}
+
+type CnameCheck {
+  status: CnameCheckStatus!
+  message: String!
+  link: String
+}
+
+enum CnameCheckStatus {
+  ERROR
+  INFO
+  INVALID
+  VALID
+  WAITING
+}
+
+type Connection {
+  id: String!
+  sourceService: Service!
+  targetService: Service!
+  sourceServiceId: String!
+  targetServiceId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ConnectionListRelationFilter {
+  every: ConnectionWhereInput
+  some: ConnectionWhereInput
+  none: ConnectionWhereInput
+}
+
+input ConnectionOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ConnectionSourceServiceIdTargetServiceIdCompoundUniqueInput {
+  sourceServiceId: String!
+  targetServiceId: String!
+}
+
+input ConnectionWhereInput {
+  AND: [ConnectionWhereInput!]
+  OR: [ConnectionWhereInput!]
+  NOT: [ConnectionWhereInput!]
+  id: StringFilter
+  sourceService: ServiceWhereInput
+  targetService: ServiceWhereInput
+  sourceServiceId: StringFilter
+  targetServiceId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+}
+
+input ConnectionWhereUniqueInput {
+  id: String
+  sourceServiceId_targetServiceId: ConnectionSourceServiceIdTargetServiceIdCompoundUniqueInput
+}
+
+type Container {
+  id: String!
+  containerId: String!
+  environment: Environment!
+  environmentId: String!
+  plugin: Plugin!
+  pluginId: String!
+  createdAt: DateTime!
+  info: ContainerInfo!
+}
+
+type ContainerInfo {
+  internalPorts: [String!]!
+}
+
+input ContainerListRelationFilter {
+  every: ContainerWhereInput
+  some: ContainerWhereInput
+  none: ContainerWhereInput
+}
+
+input ContainerOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ContainerWhereInput {
+  AND: [ContainerWhereInput!]
+  OR: [ContainerWhereInput!]
+  NOT: [ContainerWhereInput!]
+  id: StringFilter
+  containerId: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+  plugin: PluginWhereInput
+  pluginId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+}
+
+input ContainerWhereUniqueInput {
+  id: String
+  containerId: String
+}
+
+type CreateProjectFromTemplateResult {
+  projectId: String!
+  workflowId: String!
+}
+
+type Credit {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  amount: Int!
+  memo: String
+  type: CreditType!
+}
+
+input CreditListRelationFilter {
+  every: CreditWhereInput
+  some: CreditWhereInput
+  none: CreditWhereInput
+}
+
+input CreditOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input CreditOrderByWithRelationInput {
+  id: SortOrder
+  memo: SortOrder
+  amount: SortOrder
+  type: SortOrder
+  customer: CustomerOrderByWithRelationInput
+  customerId: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+}
+
+enum CreditType {
+  CREDIT
+  DEBIT
+  STRIPE
+  APPLIED
+}
+
+input CreditWhereInput {
+  AND: [CreditWhereInput!]
+  OR: [CreditWhereInput!]
+  NOT: [CreditWhereInput!]
+  id: StringFilter
+  memo: StringNullableFilter
+  amount: IntFilter
+  type: EnumCreditTypeFilter
+  customer: CustomerWhereInput
+  customerId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+}
+
+input CreditWhereUniqueInput {
+  id: String
+}
+
+type CustomDomain {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  environmentId: String!
+  domain: String!
+  cnameCheck: CnameCheck!
+}
+
+input CustomDomainDomainDeletedAtCompoundUniqueInput {
+  domain: String!
+  deletedAt: DateTime!
+}
+
+input CustomDomainListRelationFilter {
+  every: CustomDomainWhereInput
+  some: CustomDomainWhereInput
+  none: CustomDomainWhereInput
+}
+
+input CustomDomainOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input CustomDomainWhereInput {
+  AND: [CustomDomainWhereInput!]
+  OR: [CustomDomainWhereInput!]
+  NOT: [CustomDomainWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+  domain: StringFilter
+  Service: ServiceWhereInput
+  serviceId: StringNullableFilter
+}
+
+input CustomDomainWhereUniqueInput {
+  id: String
+  domain_deletedAt: CustomDomainDomainDeletedAtCompoundUniqueInput
+}
+
+type Customer {
+  id: String!
+  state: SubscriptionState!
+  stripeCustomerId: String!
+  credits(
+    orderBy: [CreditOrderByWithRelationInput!]
+    first: Int
+    last: Int
+    before: CreditWhereUniqueInput
+    after: CreditWhereUniqueInput
+  ): [Credit!]!
+  userId: String
+  billingEmail: String
+  stripePaymentMethodId: String
+  subscriptions: [CustomerSubscription!]!
+  freePlanBalance: Float!
+  usageLimit: Float
+  creditBalance: Float!
+  appliedCredits: Float!
+}
+
+type CustomerInvoice {
+  invoiceId: String!
+  status: String
+  total: Int!
+  periodStart: String!
+  periodEnd: String!
+  pdfURL: String
+  items: [SubscriptionItem!]!
+}
+
+input CustomerOrderByWithRelationInput {
+  id: SortOrder
+  stripeCustomerId: SortOrder
+  state: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+  team: TeamOrderByWithRelationInput
+  teamId: SortOrder
+  credits: CreditOrderByRelationAggregateInput
+  partnerProjects: PartnerProjectOrderByRelationAggregateInput
+  contributions: PartnerPayoutOrderByRelationAggregateInput
+}
+
+type CustomerSubscription {
+  id: String!
+  status: String!
+  latestInvoiceId: String!
+  couponId: String
+  nextInvoiceDate: String!
+  cancelAt: String
+  nextInvoiceCurrentTotal: Int!
+  items: [SubscriptionItem!]!
+  invoices: [CustomerInvoice!]!
+}
+
+input CustomerWhereInput {
+  AND: [CustomerWhereInput!]
+  OR: [CustomerWhereInput!]
+  NOT: [CustomerWhereInput!]
+  id: StringFilter
+  stripeCustomerId: StringFilter
+  state: EnumSubscriptionStateFilter
+  user: UserWhereInput
+  userId: StringNullableFilter
+  team: TeamWhereInput
+  teamId: StringNullableFilter
+  credits: CreditListRelationFilter
+  partnerProjects: PartnerProjectListRelationFilter
+  contributions: PartnerPayoutListRelationFilter
+}
+
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+type Deployment {
+  id: String!
+  environmentId: String!
+  environment: Environment!
+  createdAt: DateTime!
+  projectId: String!
+  project: Project!
+  snapshotId: String
+  status: DeploymentStatus!
+  url: String
+  creator: User
+  creatorId: String
+  meta: Json
+  containerId: String
+  canRollback: Boolean!
+  containerInfo: ContainerInfo!
+  staticUrl: String!
+  buildLogs: String!
+  deployLogs: String!
+}
+
+type DeploymentByDomain {
+  projectId: String
+  activeDeployment: Deployment
+  latestDeployment: Deployment
+}
+
+input DeploymentListRelationFilter {
+  every: DeploymentWhereInput
+  some: DeploymentWhereInput
+  none: DeploymentWhereInput
+}
+
+input DeploymentOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input DeploymentOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  deletedAt: SortOrder
+  status: SortOrder
+  project: ProjectOrderByWithRelationInput
+  projectId: SortOrder
+  environment: EnvironmentOrderByWithRelationInput
+  environmentId: SortOrder
+  snapshot: DeploymentSnapshotOrderByWithRelationInput
+  snapshotId: SortOrder
+  containerId: SortOrder
+  url: SortOrder
+  creator: UserOrderByWithRelationInput
+  creatorId: SortOrder
+  meta: SortOrder
+  service: ServiceOrderByWithRelationInput
+  serviceId: SortOrder
+}
+
+type DeploymentSnapshot {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input DeploymentSnapshotOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  codeUri: SortOrder
+  encryptedVariables: SortOrder
+  imageUri: SortOrder
+  deployments: DeploymentOrderByRelationAggregateInput
+}
+
+input DeploymentSnapshotWhereInput {
+  AND: [DeploymentSnapshotWhereInput!]
+  OR: [DeploymentSnapshotWhereInput!]
+  NOT: [DeploymentSnapshotWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  codeUri: StringFilter
+  encryptedVariables: StringNullableFilter
+  imageUri: StringNullableFilter
+  deployments: DeploymentListRelationFilter
+}
+
+enum DeploymentStatus {
+  INITIALIZING
+  BUILDING
+  DEPLOYING
+  SUCCESS
+  FAILED
+  REMOVED
+  CRASHED
+}
+
+type DeploymentTrigger {
+  id: String!
+  provider: String!
+  repository: String!
+  rootDirectory: String
+  projectId: String!
+  branch: String!
+  environmentId: String!
+  serviceId: String
+  baseEnvironmentOverrideId: String
+  baseEnvironmentOverride: Environment
+}
+
+input DeploymentTriggerListRelationFilter {
+  every: DeploymentTriggerWhereInput
+  some: DeploymentTriggerWhereInput
+  none: DeploymentTriggerWhereInput
+}
+
+input DeploymentTriggerOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input DeploymentTriggerWhereInput {
+  AND: [DeploymentTriggerWhereInput!]
+  OR: [DeploymentTriggerWhereInput!]
+  NOT: [DeploymentTriggerWhereInput!]
+  id: StringFilter
+  provider: StringFilter
+  branch: StringFilter
+  repository: StringFilter
+  rootDirectory: StringNullableFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+  baseEnvironmentOverride: EnvironmentWhereInput
+  baseEnvironmentOverrideId: StringNullableFilter
+  service: ServiceWhereInput
+  serviceId: StringNullableFilter
+}
+
+input DeploymentTriggerWhereUniqueInput {
+  id: String
+}
+
+input DeploymentWhereInput {
+  AND: [DeploymentWhereInput!]
+  OR: [DeploymentWhereInput!]
+  NOT: [DeploymentWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  status: EnumDeploymentStatusFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+  snapshot: DeploymentSnapshotWhereInput
+  snapshotId: StringNullableFilter
+  containerId: StringNullableFilter
+  url: StringNullableFilter
+  creator: UserWhereInput
+  creatorId: StringNullableFilter
+  meta: JsonNullableFilter
+  service: ServiceWhereInput
+  serviceId: StringNullableFilter
+}
+
+input DeploymentWhereUniqueInput {
+  id: String
+  containerId: String
+}
+
+type DeploymentWithMetrics {
+  deployment: Deployment!
+  metrics: [Metric!]!
+}
+
+enum DeployStatus {
+  INITIALIZING
+  BUILDING
+  DEPLOYING
+  SUCCESS
+  FAILED
+  REMOVED
+  CRASHED
+}
+
+type DomainAvailable {
+  message: String!
+  available: Boolean!
+}
+
+# An index belonging to an elasticsearch container
+type ElasticIndex {
+  uuid: String!
+  name: String!
+  numDocs: Int!
+}
+
+# An item belonging to an elasticsearch search
+type ElasticSearchItem {
+  id: String!
+  index: String!
+  type: String!
+  score: Float!
+  data: Json!
+}
+
+# A search result from an elasticsearch container
+type ElasticSearchResult {
+  time: Float!
+  numResults: Int!
+  items: [ElasticSearchItem!]!
+}
+
+input EnumCreditTypeFilter {
+  equals: CreditType
+  in: [CreditType!]
+  notIn: [CreditType!]
+  not: NestedEnumCreditTypeFilter
+}
+
+input EnumDeploymentStatusFilter {
+  equals: DeploymentStatus
+  in: [DeploymentStatus!]
+  notIn: [DeploymentStatus!]
+  not: NestedEnumDeploymentStatusFilter
+}
+
+input EnumPartnerProjectStatusFilter {
+  equals: PartnerProjectStatus
+  in: [PartnerProjectStatus!]
+  notIn: [PartnerProjectStatus!]
+  not: NestedEnumPartnerProjectStatusFilter
+}
+
+input EnumPlanFilter {
+  equals: Plan
+  in: [Plan!]
+  notIn: [Plan!]
+  not: NestedEnumPlanFilter
+}
+
+input EnumPluginTypeFilter {
+  equals: PluginType
+  in: [PluginType!]
+  notIn: [PluginType!]
+  not: NestedEnumPluginTypeFilter
+}
+
+input EnumProjectRoleFilter {
+  equals: ProjectRole
+  in: [ProjectRole!]
+  notIn: [ProjectRole!]
+  not: NestedEnumProjectRoleFilter
+}
+
+input EnumReferralStatusFilter {
+  equals: ReferralStatus
+  in: [ReferralStatus!]
+  notIn: [ReferralStatus!]
+  not: NestedEnumReferralStatusFilter
+}
+
+input EnumRegistrationStatusFilter {
+  equals: RegistrationStatus
+  in: [RegistrationStatus!]
+  notIn: [RegistrationStatus!]
+  not: NestedEnumRegistrationStatusFilter
+}
+
+input EnumSessionTypeFilter {
+  equals: SessionType
+  in: [SessionType!]
+  notIn: [SessionType!]
+  not: NestedEnumSessionTypeFilter
+}
+
+input EnumSubscriptionStateFilter {
+  equals: SubscriptionState
+  in: [SubscriptionState!]
+  notIn: [SubscriptionState!]
+  not: NestedEnumSubscriptionStateFilter
+}
+
+input EnumTeamRoleFilter {
+  equals: TeamRole
+  in: [TeamRole!]
+  notIn: [TeamRole!]
+  not: NestedEnumTeamRoleFilter
+}
+
+input EnumVerificationAppealStatusFilter {
+  equals: VerificationAppealStatus
+  in: [VerificationAppealStatus!]
+  notIn: [VerificationAppealStatus!]
+  not: NestedEnumVerificationAppealStatusFilter
+}
+
+type Environment {
+  id: String!
+  name: String!
+  projectId: String!
+  containers(
+    first: Int
+    last: Int
+    before: ContainerWhereUniqueInput
+    after: ContainerWhereUniqueInput
+  ): [Container!]!
+  variables(
+    first: Int
+    last: Int
+    before: VariableWhereUniqueInput
+    after: VariableWhereUniqueInput
+  ): [Variable!]!
+  environmentTokens(
+    first: Int
+    last: Int
+    before: ProjectTokenWhereUniqueInput
+    after: ProjectTokenWhereUniqueInput
+  ): [ProjectToken!]!
+  customDomains(
+    first: Int
+    last: Int
+    before: CustomDomainWhereUniqueInput
+    after: CustomDomainWhereUniqueInput
+  ): [CustomDomain!]!
+  deployments(
+    where: DeploymentWhereInput
+    orderBy: [DeploymentOrderByWithRelationInput!]
+    first: Int
+    last: Int
+    before: DeploymentWhereUniqueInput
+    after: DeploymentWhereUniqueInput
+  ): [Deployment!]!
+  deploymentTriggers(
+    first: Int
+    last: Int
+    before: DeploymentTriggerWhereUniqueInput
+    after: DeploymentTriggerWhereUniqueInput
+  ): [DeploymentTrigger!]!
+  domain: String!
+  isEphemeral: Boolean!
+}
+
+input EnvironmentListRelationFilter {
+  every: EnvironmentWhereInput
+  some: EnvironmentWhereInput
+  none: EnvironmentWhereInput
+}
+
+type EnvironmentMetrics {
+  deployments: [DeploymentWithMetrics!]!
+  plugins: [PluginWithMetrics!]!
+}
+
+input EnvironmentNameProjectIdCompoundUniqueInput {
+  name: String!
+  projectId: String!
+}
+
+input EnvironmentOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input EnvironmentOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  project: ProjectOrderByWithRelationInput
+  projectId: SortOrder
+  containers: ContainerOrderByRelationAggregateInput
+  environmentTokens: ProjectTokenOrderByRelationAggregateInput
+  Log: LogOrderByRelationAggregateInput
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  deletedAt: SortOrder
+  domain: SortOrder
+  customDomains: CustomDomainOrderByRelationAggregateInput
+  isEphemeral: SortOrder
+  deployments: DeploymentOrderByRelationAggregateInput
+  integrations: IntegrationOrderByRelationAggregateInput
+  deploymentTriggers: DeploymentTriggerOrderByRelationAggregateInput
+  overridenTriggers: DeploymentTriggerOrderByRelationAggregateInput
+  variables: VariableOrderByRelationAggregateInput
+}
+
+input EnvironmentWhereInput {
+  AND: [EnvironmentWhereInput!]
+  OR: [EnvironmentWhereInput!]
+  NOT: [EnvironmentWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  containers: ContainerListRelationFilter
+  environmentTokens: ProjectTokenListRelationFilter
+  Log: LogListRelationFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  domain: StringFilter
+  customDomains: CustomDomainListRelationFilter
+  isEphemeral: BoolFilter
+  deployments: DeploymentListRelationFilter
+  integrations: IntegrationListRelationFilter
+  deploymentTriggers: DeploymentTriggerListRelationFilter
+  overridenTriggers: DeploymentTriggerListRelationFilter
+  variables: VariableListRelationFilter
+}
+
+input EnvironmentWhereUniqueInput {
+  id: String
+  domain: String
+  name_projectId: EnvironmentNameProjectIdCompoundUniqueInput
+}
+
+type EnvVar {
+  name: String!
+  description: String
+  defaultValue: String
+  optional: Boolean
+}
+
+input FloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: NestedFloatNullableFilter
+}
+
+type GenericPlugin {
+  id: String!
+  createdAt: DateTime!
+  pluginId: String!
+  url: String!
+  genericPluginTokens(
+    first: Int
+    last: Int
+    before: GenericPluginTokenWhereUniqueInput
+    after: GenericPluginTokenWhereUniqueInput
+  ): [GenericPluginToken!]!
+  tabConfig(environmentId: ID!): [GenericPluginTabConfiguration!]!
+}
+
+type GenericPluginTabConfiguration {
+  name: String!
+  url: String!
+  resizable: Boolean
+  height: String
+}
+
+type GenericPluginToken {
+  id: String!
+  createdAt: DateTime!
+  displayToken: String!
+}
+
+input GenericPluginTokenListRelationFilter {
+  every: GenericPluginTokenWhereInput
+  some: GenericPluginTokenWhereInput
+  none: GenericPluginTokenWhereInput
+}
+
+input GenericPluginTokenWhereInput {
+  AND: [GenericPluginTokenWhereInput!]
+  OR: [GenericPluginTokenWhereInput!]
+  NOT: [GenericPluginTokenWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  hashedToken: StringFilter
+  displayToken: StringFilter
+  genericPlugin: GenericPluginWhereInput
+  genericPluginId: StringFilter
+}
+
+input GenericPluginTokenWhereUniqueInput {
+  id: String
+  hashedToken: String
+}
+
+input GenericPluginWhereInput {
+  AND: [GenericPluginWhereInput!]
+  OR: [GenericPluginWhereInput!]
+  NOT: [GenericPluginWhereInput!]
+  id: StringFilter
+  url: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  plugin: PluginWhereInput
+  pluginId: StringFilter
+  genericPluginTokens: GenericPluginTokenListRelationFilter
+}
+
+type GitHubBranch {
+  name: String!
+}
+
+type GitHubRepo {
+  id: Int!
+  name: String!
+  fullName: String!
+  installationId: String!
+  defaultBranch: String!
+}
+
+type Integration {
+  id: String!
+  name: String!
+  config: Json!
+  projectId: String!
+}
+
+type IntegrationAuth {
+  id: String!
+  provider: String!
+  providerId: String!
+  integrations(
+    first: Int
+    last: Int
+    before: IntegrationWhereUniqueInput
+    after: IntegrationWhereUniqueInput
+  ): [Integration!]!
+}
+
+input IntegrationAuthListRelationFilter {
+  every: IntegrationAuthWhereInput
+  some: IntegrationAuthWhereInput
+  none: IntegrationAuthWhereInput
+}
+
+input IntegrationAuthOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input IntegrationAuthWhereInput {
+  AND: [IntegrationAuthWhereInput!]
+  OR: [IntegrationAuthWhereInput!]
+  NOT: [IntegrationAuthWhereInput!]
+  id: StringFilter
+  provider: StringFilter
+  providerId: StringFilter
+  accessToken: StringFilter
+  refreshToken: StringFilter
+  user: UserWhereInput
+  userId: StringFilter
+  teamId: StringNullableFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  integrations: IntegrationListRelationFilter
+}
+
+input IntegrationListRelationFilter {
+  every: IntegrationWhereInput
+  some: IntegrationWhereInput
+  none: IntegrationWhereInput
+}
+
+input IntegrationOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input IntegrationWhereInput {
+  AND: [IntegrationWhereInput!]
+  OR: [IntegrationWhereInput!]
+  NOT: [IntegrationWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  watchedEnvironments: EnvironmentListRelationFilter
+  integrationAuth: IntegrationAuthWhereInput
+  integrationAuthId: StringNullableFilter
+}
+
+input IntegrationWhereUniqueInput {
+  id: String
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+type InviteCode {
+  id: String!
+  code: String!
+  createdAt: DateTime!
+  project: Project!
+  projectId: String!
+  role: ProjectRole!
+}
+
+input InviteCodeListRelationFilter {
+  every: InviteCodeWhereInput
+  some: InviteCodeWhereInput
+  none: InviteCodeWhereInput
+}
+
+input InviteCodeOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input InviteCodeWhereInput {
+  AND: [InviteCodeWhereInput!]
+  OR: [InviteCodeWhereInput!]
+  NOT: [InviteCodeWhereInput!]
+  id: StringFilter
+  code: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  role: EnumProjectRoleFilter
+}
+
+scalar Json
+
+input JsonNullableFilter {
+  equals: Json
+  not: Json
+}
+
+input LogListRelationFilter {
+  every: LogWhereInput
+  some: LogWhereInput
+  none: LogWhereInput
+}
+
+input LogOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input LogWhereInput {
+  AND: [LogWhereInput!]
+  OR: [LogWhereInput!]
+  NOT: [LogWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  message: StringFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+}
+
+type MagicAuth {
+  id: String!
+  email: String!
+  userId: String!
+}
+
+input MagicAuthListRelationFilter {
+  every: MagicAuthWhereInput
+  some: MagicAuthWhereInput
+  none: MagicAuthWhereInput
+}
+
+input MagicAuthOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input MagicAuthWhereInput {
+  AND: [MagicAuthWhereInput!]
+  OR: [MagicAuthWhereInput!]
+  NOT: [MagicAuthWhereInput!]
+  id: StringFilter
+  issuer: StringFilter
+  email: StringFilter
+  user: UserWhereInput
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+}
+
+# Represents a user that belongs to a project
+type Member {
+  id: String!
+  email: String!
+  name: String
+  avatar: String
+  role: ProjectRole!
+}
+
+type Metric {
+  containerId: String!
+  cpuPercentVCPU: Float!
+  memoryUsageBytes: BigInt!
+  memoryLimitBytes: BigInt!
+  networkTxBytes: BigInt!
+  networkRxBytes: BigInt!
+  date: String!
+}
+
+# A collection belonging to a MongoDB database
+type MongoCollection {
+  name: String!
+  data: Json!
+}
+
+type Mutation {
+  # Delete a provider auth
+  removeProviderAuth(authId: String!): Boolean!
+  # Create a custom domain for an environment
+  createCustomDomain(
+    projectId: String!
+    environmentId: String!
+    domain: String!
+  ): CustomDomain!
+  # Deletes a custom domain for an environment
+  deleteCustomDomain(
+    projectId: String!
+    environmentId: String!
+    customDomainId: String!
+  ): Boolean!
+  # Create a customer for a user if it doesn't already exist
+  ensureCustomerExists(userId: String!): Boolean!
+  # Apply a credit to a customer
+  applyCredit(customerId: String!, amount: Float!, memo: String): Boolean!
+  # Update the billing email for a customer
+  updateBillingEmail(customerId: String!, billingEmail: String!): Customer!
+  # Attach a payment method to a customer
+  attachPaymentMethod(customerId: String!, paymentMethodId: String!): Boolean!
+  # Create a billing portal for a Stripe customer
+  createCustomerBillingPortal(
+    customerId: String!
+    redirectUrl: String!
+  ): String!
+  # Create a subscription for a team
+  createSubscriptionForCustomer(
+    customerId: String!
+    paymentMethodId: String
+  ): Json!
+  # Retry the invoice for a subscription with an updated payment method
+  retryInvoiceForSubscription(
+    customerId: String!
+    paymentMethodId: String!
+    invoiceId: String!
+  ): Json!
+  # Upgrade the current user from an early adopter plan to usage based plan
+  upgradeFromEarlyAdopterPlan(customerId: String!): Json!
+  # Remove a deployment
+  removeDeployment(deploymentId: ID!, projectId: ID!): Boolean!
+  # Cancel a deployment
+  cancelDeployment(deploymentId: ID!, projectId: ID!): Boolean!
+  # Creates a deployment from a repo + branch and attaches it to environment
+  createDeployment(
+    repository: String!
+    branch: String!
+    rootDirectory: String
+    environmentId: ID!
+    projectId: ID!
+  ): String!
+  # Rollback to a given deployment
+  rollbackDeployment(deploymentId: ID!, projectId: ID!): Boolean!
+  # Restart a given deployment
+  restartDeployment(deploymentId: ID!, projectId: ID!): Boolean!
+  # Get a short-lived URL to download the code for a snapshot
+  getDeploymentSnapshotCodeUrl(projectId: ID!, deploymentId: ID!): String!
+  # Add a deployment trigger
+  createDeploymentTrigger(
+    repository: String!
+    branch: String!
+    rootDirectory: String
+    provider: String!
+    environmentId: String!
+    projectId: String!
+    serviceId: String
+  ): DeploymentTrigger!
+  # Updates a deployment trigger
+  updateDeploymentTrigger(
+    triggerId: String!
+    repository: String
+    branch: String
+    rootDirectory: String
+    projectId: String!
+  ): DeploymentTrigger!
+  # Remove a deployment trigger
+  removeDeploymentTrigger(triggerId: String!, projectId: String!): Boolean!
+  # Redeploy all triggers that are connected to an environment
+  deployEnvironmentTriggers(
+    environmentId: ID!
+    projectId: ID!
+    serviceId: ID
+  ): Boolean!
+  # Set the base environment override of a deployment trigger
+  setBaseEnvironmentOverride(
+    projectId: String!
+    triggerId: String!
+    baseEnvironmentOverrideId: String
+  ): Boolean!
+  # Generate dummy data for an Elasticsearch container
+  elasticDummyData(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Add an environment to a project
+  createEnvironment(name: String!, projectId: String!): Environment!
+  # Creates an ephemeral environment for a project
+  createEphemeralEnvironment(
+    name: String!
+    projectId: String!
+    baseEnvironmentId: String!
+  ): Environment!
+  # Deletes Environment and destroys all containers associated with it
+  deleteEnvironment(projectId: String!, environmentId: String!): Boolean!
+  # Reset envs and container for a plugin in an environment
+  resetPluginForEnvironment(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Resets the credentials for a plugin in an environment
+  resetPluginCredentialsForEnvironment(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): String!
+  # Sets the domain for an environment
+  setDomainForEnvironment(
+    projectId: String!
+    environmentId: String!
+    domain: String!
+  ): Boolean!
+  # Create new generic plugin and provision containers for all environments in project
+  createGenericPlugin(projectId: ID!, url: String!): Plugin!
+  # Create new plugin token for all environments in project
+  createGenericPluginToken(projectId: ID!, genericPluginId: ID!): String!
+  # Delete a plugin token
+  deleteGenericPluginToken(projectId: ID!, genericPluginTokenId: ID!): Boolean!
+  # Create an integration for a project
+  createIntegration(
+    projectId: String!
+    name: String!
+    config: Json!
+    integrationAuthId: String
+  ): Integration!
+  # Update an integration for a project
+  updateIntegration(
+    integrationId: String!
+    projectId: String!
+    name: String!
+    config: Json!
+    integrationAuthId: String
+  ): Integration!
+  # Remove an integration for a project
+  removeIntegration(integrationId: String!, projectId: String!): Boolean!
+  # Join a project using an invite code as the currently authenticated user.
+  joinWithInviteCode(code: String!): Project!
+  # Change the role for a user and project
+  changeUserRole(projectId: String!, userId: String!, role: String!): Member!
+  # Initate transfer of project ownership
+  initiateOwnershipTransfer(projectId: ID!, memberId: ID!): Boolean!
+  # Confirm the transfer of project ownership
+  confirmOwnershipTransfer(projectId: ID!, ownershipTransferId: ID!): Boolean!
+  # Remove user from a project
+  removeUserFromProject(projectId: String!, userId: String!): [Member!]!
+  # Insert a document into a MongoDB container
+  mongoInsertDocument(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+    name: String!
+    data: Json!
+  ): String!
+  # Delete an entire collection from a MongoDB container
+  mongoDeleteCollection(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+    name: String!
+  ): Boolean!
+  # Delete a document from a MongoDB container
+  mongoDeleteDocument(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+    name: String!
+    id: String!
+  ): Boolean!
+  # Update a doucmnet in a MongoDB container
+  mongoUpdateDocument(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+    name: String!
+    id: String!
+    data: Json!
+  ): Boolean!
+  # Generate dummy data for a MongoDB container
+  mongoDummyData(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+  ): Boolean!
+  # Create new plugin and provision containers for all environments in project
+  createPlugin(projectId: String!, name: String!): Plugin!
+  # Deletes a plugin and destroys all containers associated with it
+  deletePlugin(id: ID!, projectId: String!): Boolean!
+  # Update project
+  updateProject(
+    projectId: ID!
+    name: String
+    description: String
+    singletonDeploys: Boolean
+    prDeploys: Boolean
+    webhookUrl: String
+    experimentalBuilder: Boolean
+    healthcheckPath: String
+  ): Project!
+  # Create a new project with plugins
+  createProject(
+    name: String
+    description: String
+    plugins: [String!]
+    teamId: String
+  ): Project!
+  # Create a project from a template repo and list of plugins
+  createProjectFromTemplate(
+    name: String!
+    owner: String!
+    template: String!
+    isPrivate: Boolean
+    plugins: [String!]
+    variables: Json
+  ): CreateProjectFromTemplateResult!
+  # Create a project and setup a deploy trigger immediately
+  createProjectFromRepo(
+    name: String
+    repo: String!
+    rootDirectory: String
+    branch: String!
+    teamId: String
+    variables: Json
+  ): Project!
+  # Deletes project and destroys all containers associated with it
+  deleteProject(projectId: String!): Boolean!
+  # Convert a public temporary project into a private owned one
+  claimProject(projectId: String!): Project!
+  # Leave project as currently authenticated user
+  leaveProject(projectId: String!): Boolean!
+  # Updates the last active date on a project
+  updateProjectLastActive(projectId: String!): DateTime!
+  # Transfer a project to a user or team
+  transferProjectToTeam(projectId: String!, teamId: String!): Boolean!
+  # Transfer a project to a user or team
+  transferProjectToUser(projectId: String!): Boolean!
+  # Invite a user by email to a project
+  inviteUserToProject(
+    projectId: String!
+    email: String!
+    link: String!
+  ): Boolean!
+  # Create a token for a project that has access to a specific environment
+  createProjectToken(
+    projectId: String!
+    environmentId: String!
+    name: String!
+  ): String!
+  # Delete project token
+  deleteProjectToken(projectId: String!, tokenId: ID!): Boolean!
+  # Create a webhook on a project
+  createWebhook(projectId: ID!, url: String!): ProjectWebhook!
+  # Update a webhook on a project
+  updateWebhook(id: ID!, projectId: ID!, url: String!): ProjectWebhook!
+  # Delete a webhook from a project
+  deleteWebhook(id: ID!, projectId: ID!): ProjectWebhook!
+  # Set a keys expire time in seconds in a Redis container
+  redisSetExpire(
+    key: String!
+    ttl: Int!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Delete a key in a Redis container
+  redisDeleteKey(
+    key: String!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Set a string value in a Redis container
+  redisStringSet(
+    key: String!
+    value: String!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Set list index to a value Redis container
+  redisSetListIndex(
+    key: String!
+    index: Int!
+    value: String!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Push a value to a list in a Redis container
+  redisPushList(
+    key: String!
+    side: String!
+    values: [String!]!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Pop a value from a list in a Redis container
+  redisPopList(
+    key: String!
+    side: String!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Add a value from a set in a Redis container
+  redisSetAdd(
+    key: String!
+    values: [String!]!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Remove a value from a set in a Redis container
+  redisSetRemove(
+    key: String!
+    values: [String!]!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Add values to a hash in a Redis container
+  redisHashSet(
+    key: String!
+    values: Json!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Delete values to a hash in a Redis container
+  redisHashDelete(
+    key: String!
+    values: [String!]!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Generate dummy data for a Redis container
+  redisDummyData(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Request a plugin for the currently authenticated user
+  requestPlugin(name: String!): Int!
+  # Un-request a plugin for the currently authenticated user
+  unRequestPlugin(name: String!): Int!
+  # Create a table in a SQLQL database container
+  createSQLTable(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    name: String!
+    columns: [SQLColumnInput!]!
+  ): Boolean!
+  # Delete a table in a SQL database container
+  deleteSQLTable(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    name: String!
+  ): Boolean!
+  # Insert a column in a table in a SQL database container
+  insertSQLColumn(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    tableName: String!
+    column: SQLColumnInput!
+  ): Boolean!
+  # Insert a row into a SQL database container
+  insertSQLRow(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    tableName: String!
+    columns: [SQLRowInput!]!
+  ): Boolean!
+  # Delete rows from a table in a SQL database container
+  deleteSQLRows(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    tableName: String!
+    columnName: String!
+    rows: [String!]!
+  ): Boolean!
+  # Update row in a table in a SQL database container
+  updateSQLRow(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    tableName: String!
+    pKey: String!
+    pKeyValue: String!
+    data: Json!
+  ): Boolean!
+  # Generate dummy data for a SQLQL database container
+  dummyDataSQL(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+  ): Boolean!
+  # Run the raw SQL query provided by the user
+  runRawQuery(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    query: String!
+  ): RawQueryResponse!
+  # Get an invite code for a team and role
+  createInviteCodeForTeam(teamId: String!, role: String!): String!
+  # Use an invite code an join a team
+  useTeamInviteCode(code: String!): Team!
+  # Create a team
+  createTeam(name: String!, avatar: String): Team!
+  # Update a team by id
+  updateTeam(teamId: String!, name: String!, avatar: String): Team!
+  # Leave a team
+  leaveTeam(teamId: String!): Boolean!
+  # Remove a user from a team
+  removeUserFromTeam(teamId: String!, userId: String!): Boolean!
+  # Delete a team and all data associated with it
+  deleteTeam(teamId: String!): Boolean!
+  # Invite a user by email to a team
+  inviteUserToTeam(teamId: String!, email: String!, link: String!): Boolean!
+  # Change the permission of a user in a team
+  changeTeamPermission(
+    teamId: String!
+    role: TeamRole!
+    userId: String!
+  ): Boolean!
+  # Logs panics from CLI to Sentry
+  sendTelemetry(
+    command: String!
+    error: String!
+    stacktrace: String!
+    projectId: String
+    environmentId: String
+    version: String
+  ): Boolean!
+  # Track event for authenticated user
+  trackEvent(eventName: String!, properties: Json): Boolean!
+  # Generate 2FA app secret for authenticated user
+  generateAuthenticatorAppSecret: QRCode!
+  # Validates token for 2FA
+  validateTwoFactorToken(token: String!): Boolean!
+  # Removes 2FA for the authenticated user
+  removeTwoFactorAuthentication: Boolean!
+  # Validates 2FA token for login
+  validateTwoFactorLogin(token: String!, twoFactorLinkingKey: String!): Boolean!
+  # Update currently logged in user
+  updateUser(name: String, avatar: String): User!
+  # Update date of TermsAgreedOn
+  updateUserTerms: User!
+  # Initiate an email change request for a user
+  initiateEmailChange(newEmail: String!): Boolean!
+  # Change the User's account email if there is a valid change email request.
+  accountEmailChange(nonce: String!): Boolean!
+  # Waitlist the user
+  waitlistUser(email: String): User!
+  # Ban user
+  banUser(userId: ID!, reason: String!): Boolean!
+  # Unbans a user
+  unbanUser(userId: ID!): Boolean!
+  # Get a token for a login session if it exists
+  consumeLoginSession(code: String!): String
+  # Start a CLI login session
+  createLoginSession: String!
+  # Auth a login session for a user
+  authLoginSession(code: String!, hostname: String): Boolean!
+  # Cancel a login session
+  cancelLoginSession(code: String!): Boolean!
+  # Deletes the currently authenticated user
+  deleteUser: Boolean!
+  # Tracks the use of a command in the command palette
+  trackCommandUsed(text: String!, category: String!): Boolean!
+  # Agree to the fair use policy for the currently authenticated user
+  agreeFairUse(agree: Boolean!): Boolean!
+  # Deletes session for current user if it exists
+  logout: Boolean!
+  # Update the riskLevel for a user
+  updateUserRiskLevel(userId: ID!, riskLevel: Float): Boolean!
+  # Deletes the user with the provided userId
+  adminDeleteUser(userId: ID!): Boolean!
+  # Delete a session
+  deleteSession(sessionId: ID!): Boolean!
+  # Sends an email with the changelog for the provided slug
+  sendChangelogEmail(
+    isTestEmail: Boolean!
+    changelogId: String!
+    changelogTitle: String!
+    changelogSlug: String!
+  ): Boolean!
+  # Update preferences for logged in user
+  updateUserPreferences(
+    buildFailedEmail: Boolean
+    changelogEmail: Boolean
+    usageEmail: Boolean
+  ): Preferences!
+  # Create or update a variable for a plugin
+  upsertVariable(
+    projectId: String!
+    environmentId: String!
+    pluginId: String
+    serviceId: String
+    name: String!
+    value: String!
+  ): Boolean!
+  # Create or update a variable for a plugin
+  deleteVariable(
+    projectId: String!
+    environmentId: String!
+    pluginId: String
+    serviceId: String
+    name: String!
+  ): Boolean!
+  # Upsert an object of variables for a plugin in an environment
+  upsertVariablesFromObject(
+    projectId: String!
+    environmentId: String!
+    pluginId: String
+    serviceId: String
+    variables: Json!
+  ): Boolean!
+  # Set all variables for a plugin in an environment
+  updateEnvsForPlugin(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    envs: Json!
+  ): Json! @deprecated(reason: "Use setVariablesForPluginEnvironment instead")
+  # Update the referral code for a user
+  updateReferralCode(code: String!): Boolean!
+  createPartnerProject(
+    partnerId: ID!
+    name: String!
+    gitUrl: String!
+    kickbackPercent: Int!
+  ): Boolean!
+  submitPartnerProject(name: String!, gitUrl: String!): Boolean!
+  updatePartnerProjectStatus(id: ID!, status: String!): Boolean!
+  # Create a service in a project
+  createService(
+    name: String
+    projectId: ID!
+    source: Json!
+    branch: String
+    # Create a connection between the new service and all other services
+    fullyConnected: Boolean
+  ): Service!
+  # Updates a service
+  updateService(
+    projectId: ID!
+    serviceId: ID!
+    name: String
+    source: Json
+    prDeploys: Boolean
+    webhookUrl: String
+    experimentalBuilder: Boolean
+    healthcheckPath: String
+  ): Service!
+  # Deletes a service
+  deleteService(projectId: ID!, serviceId: ID!): Boolean!
+  # Creates a bidirectional service connection between serviceA and serviceB
+  createConnection(projectId: ID!, serviceA: ID!, serviceB: ID!): Boolean!
+  # Create a Verification Appeal for a risky user.
+  createVerificationAppeal(repo: String!, userMessage: String!): Boolean!
+  # Approve a Verification Appeal for a risky user.
+  handleVerificationAppeal(id: String!, approved: Boolean!): Boolean!
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolNullableFilter {
+  equals: Boolean
+  not: NestedBoolNullableFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+input NestedEnumCreditTypeFilter {
+  equals: CreditType
+  in: [CreditType!]
+  notIn: [CreditType!]
+  not: NestedEnumCreditTypeFilter
+}
+
+input NestedEnumDeploymentStatusFilter {
+  equals: DeploymentStatus
+  in: [DeploymentStatus!]
+  notIn: [DeploymentStatus!]
+  not: NestedEnumDeploymentStatusFilter
+}
+
+input NestedEnumPartnerProjectStatusFilter {
+  equals: PartnerProjectStatus
+  in: [PartnerProjectStatus!]
+  notIn: [PartnerProjectStatus!]
+  not: NestedEnumPartnerProjectStatusFilter
+}
+
+input NestedEnumPlanFilter {
+  equals: Plan
+  in: [Plan!]
+  notIn: [Plan!]
+  not: NestedEnumPlanFilter
+}
+
+input NestedEnumPluginTypeFilter {
+  equals: PluginType
+  in: [PluginType!]
+  notIn: [PluginType!]
+  not: NestedEnumPluginTypeFilter
+}
+
+input NestedEnumProjectRoleFilter {
+  equals: ProjectRole
+  in: [ProjectRole!]
+  notIn: [ProjectRole!]
+  not: NestedEnumProjectRoleFilter
+}
+
+input NestedEnumReferralStatusFilter {
+  equals: ReferralStatus
+  in: [ReferralStatus!]
+  notIn: [ReferralStatus!]
+  not: NestedEnumReferralStatusFilter
+}
+
+input NestedEnumRegistrationStatusFilter {
+  equals: RegistrationStatus
+  in: [RegistrationStatus!]
+  notIn: [RegistrationStatus!]
+  not: NestedEnumRegistrationStatusFilter
+}
+
+input NestedEnumSessionTypeFilter {
+  equals: SessionType
+  in: [SessionType!]
+  notIn: [SessionType!]
+  not: NestedEnumSessionTypeFilter
+}
+
+input NestedEnumSubscriptionStateFilter {
+  equals: SubscriptionState
+  in: [SubscriptionState!]
+  notIn: [SubscriptionState!]
+  not: NestedEnumSubscriptionStateFilter
+}
+
+input NestedEnumTeamRoleFilter {
+  equals: TeamRole
+  in: [TeamRole!]
+  notIn: [TeamRole!]
+  not: NestedEnumTeamRoleFilter
+}
+
+input NestedEnumVerificationAppealStatusFilter {
+  equals: VerificationAppealStatus
+  in: [VerificationAppealStatus!]
+  notIn: [VerificationAppealStatus!]
+  not: NestedEnumVerificationAppealStatusFilter
+}
+
+input NestedFloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: NestedFloatNullableFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+type PaginatedDeploys {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [Deployment!]!
+}
+
+type PaginatedPartnerProjects {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [PartnerProject!]!
+}
+
+type PaginatedProjects {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [Project!]!
+}
+
+type PaginatedTeams {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [Team!]!
+}
+
+type PaginatedUsers {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [User!]!
+}
+
+type PaginatedVerificationAppeals {
+  page: Int!
+  totalPages: Int!
+  itemsPerPage: Int!
+  result: [VerificationAppeal!]!
+}
+
+type PartnerPayout {
+  partnerProjects: Int!
+  totalProjectsActiveThisMonth: Int
+  totalCreditsEarned: Float!
+  totalEstimatedCreditsEarned: Float!
+}
+
+type PartnerPayoutForProject {
+  projectsActiveThisMonth: Int!
+  contributingProjects: Int!
+  totalCreditsEarned: Int!
+  estimatedMonthlyCreditsEarned: Int!
+}
+
+input PartnerPayoutListRelationFilter {
+  every: PartnerPayoutWhereInput
+  some: PartnerPayoutWhereInput
+  none: PartnerPayoutWhereInput
+}
+
+input PartnerPayoutOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input PartnerPayoutWhereInput {
+  AND: [PartnerPayoutWhereInput!]
+  OR: [PartnerPayoutWhereInput!]
+  NOT: [PartnerPayoutWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  partnerProject: PartnerProjectWhereInput
+  partnerProjectId: StringFilter
+  contributor: CustomerWhereInput
+  contributorId: StringFilter
+  monthYear: StringFilter
+  amount: IntFilter
+}
+
+type PartnerProject {
+  id: String!
+  name: String!
+  gitUrl: String!
+  kickbackPercent: Int!
+  status: PartnerProjectStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  activeProjects(
+    first: Int
+    last: Int
+    before: ProjectWhereUniqueInput
+    after: ProjectWhereUniqueInput
+  ): [Project!]!
+}
+
+input PartnerProjectListRelationFilter {
+  every: PartnerProjectWhereInput
+  some: PartnerProjectWhereInput
+  none: PartnerProjectWhereInput
+}
+
+input PartnerProjectOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input PartnerProjectOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  name: SortOrder
+  gitUrl: SortOrder
+  kickbackPercent: SortOrder
+  status: SortOrder
+  activeProjects: ProjectOrderByRelationAggregateInput
+  partner: CustomerOrderByWithRelationInput
+  partnerId: SortOrder
+  partnerPayouts: PartnerPayoutOrderByRelationAggregateInput
+}
+
+enum PartnerProjectStatus {
+  APPLIED
+  APPROVED
+  REJECTED
+}
+
+input PartnerProjectWhereInput {
+  AND: [PartnerProjectWhereInput!]
+  OR: [PartnerProjectWhereInput!]
+  NOT: [PartnerProjectWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  name: StringFilter
+  gitUrl: StringFilter
+  kickbackPercent: IntFilter
+  status: EnumPartnerProjectStatusFilter
+  activeProjects: ProjectListRelationFilter
+  partner: CustomerWhereInput
+  partnerId: StringFilter
+  partnerPayouts: PartnerPayoutListRelationFilter
+}
+
+enum Plan {
+  FREE
+  EARLY_ADOPTER
+}
+
+type Plugin {
+  id: String!
+  name: PluginType!
+  project: Project!
+  projectId: String!
+  containers(
+    first: Int
+    last: Int
+    before: ContainerWhereUniqueInput
+    after: ContainerWhereUniqueInput
+  ): [Container!]!
+  variables(
+    first: Int
+    last: Int
+    before: VariableWhereUniqueInput
+    after: VariableWhereUniqueInput
+  ): [Variable!]!
+}
+
+input PluginListRelationFilter {
+  every: PluginWhereInput
+  some: PluginWhereInput
+  none: PluginWhereInput
+}
+
+input PluginOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+enum PluginType {
+  postgresql
+  mongodb
+  redis
+  elastic
+  mysql
+  minio
+  generic
+  leveldb
+  env
+}
+
+input PluginWhereInput {
+  AND: [PluginWhereInput!]
+  OR: [PluginWhereInput!]
+  NOT: [PluginWhereInput!]
+  id: StringFilter
+  name: EnumPluginTypeFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  containers: ContainerListRelationFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  genericPlugin: GenericPluginWhereInput
+  variables: VariableListRelationFilter
+}
+
+input PluginWhereUniqueInput {
+  id: String
+}
+
+type PluginWithMetrics {
+  plugin: Plugin!
+  metrics: [Metric!]!
+}
+
+type Preferences {
+  buildFailedEmail: Boolean!
+  changelogEmail: Boolean!
+  usageEmail: Boolean!
+}
+
+input PreferencesOrderByWithRelationInput {
+  id: SortOrder
+  buildFailedEmail: SortOrder
+  changelogEmail: SortOrder
+  usageEmail: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+input PreferencesWhereInput {
+  AND: [PreferencesWhereInput!]
+  OR: [PreferencesWhereInput!]
+  NOT: [PreferencesWhereInput!]
+  id: StringFilter
+  buildFailedEmail: BoolFilter
+  changelogEmail: BoolFilter
+  usageEmail: BoolFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+type Project {
+  id: String!
+  name: String!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiredAt: DateTime
+  deletedAt: DateTime
+  singletonDeploys: Boolean!
+  deploymentTriggers(
+    first: Int
+    last: Int
+    before: DeploymentTriggerWhereUniqueInput
+    after: DeploymentTriggerWhereUniqueInput
+  ): [DeploymentTrigger!]!
+  prDeploys: Boolean!
+  experimentalBuilder: Boolean
+  teamId: String
+  healthcheckPath: String
+  team: ProjectTeam
+  members: [Member!]!
+  plugins(
+    where: PluginWhereInput
+    first: Int
+    last: Int
+    before: PluginWhereUniqueInput
+    after: PluginWhereUniqueInput
+  ): [Plugin!]!
+  environments(
+    where: EnvironmentWhereInput
+    first: Int
+    last: Int
+    before: EnvironmentWhereUniqueInput
+    after: EnvironmentWhereUniqueInput
+  ): [Environment!]!
+  services(
+    where: ServiceWhereInput
+    first: Int
+    last: Int
+    before: ServiceWhereUniqueInput
+    after: ServiceWhereUniqueInput
+  ): [Service!]!
+  deployments(
+    where: DeploymentWhereInput
+    orderBy: [DeploymentOrderByWithRelationInput!]
+    first: Int
+    last: Int
+    before: DeploymentWhereUniqueInput
+    after: DeploymentWhereUniqueInput
+  ): [Deployment!]!
+  projectPermissions(
+    first: Int
+    last: Int
+    before: ProjectPermissionWhereUniqueInput
+    after: ProjectPermissionWhereUniqueInput
+  ): [ProjectPermission!]!
+  webhooks(
+    first: Int
+    last: Int
+    before: ProjectWebhookWhereUniqueInput
+    after: ProjectWebhookWhereUniqueInput
+  ): [ProjectWebhook!]!
+  isTempProject: Boolean!
+}
+
+input ProjectListRelationFilter {
+  every: ProjectWhereInput
+  some: ProjectWhereInput
+  none: ProjectWhereInput
+}
+
+input ProjectOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ProjectOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  description: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  deletedAt: SortOrder
+  expiredAt: SortOrder
+  singletonDeploys: SortOrder
+  prDeploys: SortOrder
+  experimentalBuilder: SortOrder
+  healthcheckPath: SortOrder
+  users: UserOrderByRelationAggregateInput
+  environments: EnvironmentOrderByRelationAggregateInput
+  plugins: PluginOrderByRelationAggregateInput
+  projectPermissions: ProjectPermissionOrderByRelationAggregateInput
+  projectTokens: ProjectTokenOrderByRelationAggregateInput
+  inviteCodes: InviteCodeOrderByRelationAggregateInput
+  deployments: DeploymentOrderByRelationAggregateInput
+  Log: LogOrderByRelationAggregateInput
+  integrations: IntegrationOrderByRelationAggregateInput
+  deploymentTriggers: DeploymentTriggerOrderByRelationAggregateInput
+  webhooks: ProjectWebhookOrderByRelationAggregateInput
+  team: TeamOrderByWithRelationInput
+  teamId: SortOrder
+  partnerProject: PartnerProjectOrderByWithRelationInput
+  partnerProjectId: SortOrder
+  services: ServiceOrderByRelationAggregateInput
+}
+
+type ProjectPermission {
+  id: String!
+  user: User!
+  userId: String!
+  project: Project!
+  projectId: String!
+  role: ProjectRole!
+}
+
+input ProjectPermissionListRelationFilter {
+  every: ProjectPermissionWhereInput
+  some: ProjectPermissionWhereInput
+  none: ProjectPermissionWhereInput
+}
+
+input ProjectPermissionOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ProjectPermissionUserIdProjectIdCompoundUniqueInput {
+  userId: String!
+  projectId: String!
+}
+
+input ProjectPermissionWhereInput {
+  AND: [ProjectPermissionWhereInput!]
+  OR: [ProjectPermissionWhereInput!]
+  NOT: [ProjectPermissionWhereInput!]
+  id: StringFilter
+  role: EnumProjectRoleFilter
+  user: UserWhereInput
+  project: ProjectWhereInput
+  userId: StringFilter
+  projectId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+}
+
+input ProjectPermissionWhereUniqueInput {
+  id: String
+  userId_projectId: ProjectPermissionUserIdProjectIdCompoundUniqueInput
+}
+
+enum ProjectRole {
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+type ProjectTeam {
+  id: ID!
+  name: String!
+  avatar: String
+}
+
+type ProjectToken {
+  id: String!
+  name: String!
+  displayToken: String!
+  createdAt: DateTime!
+  environment: Environment!
+  environmentId: String!
+  projectId: String!
+}
+
+input ProjectTokenListRelationFilter {
+  every: ProjectTokenWhereInput
+  some: ProjectTokenWhereInput
+  none: ProjectTokenWhereInput
+}
+
+input ProjectTokenOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ProjectTokenWhereInput {
+  AND: [ProjectTokenWhereInput!]
+  OR: [ProjectTokenWhereInput!]
+  NOT: [ProjectTokenWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  hashedToken: StringFilter
+  displayToken: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+}
+
+input ProjectTokenWhereUniqueInput {
+  id: String
+  hashedToken: String
+}
+
+type ProjectUsage {
+  project: Project!
+  currentUsage: UsageItem!
+  avgUsage: UsageItem!
+  estimatedUsage: UsageItem!
+  buckets: [UsageBucket!]!
+  startDate: String!
+  endDate: String!
+}
+
+type ProjectWebhook {
+  id: String!
+  url: String!
+  lastStatus: Int
+}
+
+input ProjectWebhookListRelationFilter {
+  every: ProjectWebhookWhereInput
+  some: ProjectWebhookWhereInput
+  none: ProjectWebhookWhereInput
+}
+
+input ProjectWebhookOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ProjectWebhookWhereInput {
+  AND: [ProjectWebhookWhereInput!]
+  OR: [ProjectWebhookWhereInput!]
+  NOT: [ProjectWebhookWhereInput!]
+  id: StringFilter
+  url: StringFilter
+  lastStatus: IntNullableFilter
+  Project: ProjectWhereInput
+  projectId: StringFilter
+}
+
+input ProjectWebhookWhereUniqueInput {
+  id: String
+}
+
+input ProjectWhereInput {
+  AND: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
+  NOT: [ProjectWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  description: StringNullableFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  expiredAt: DateTimeNullableFilter
+  singletonDeploys: BoolFilter
+  prDeploys: BoolFilter
+  experimentalBuilder: BoolNullableFilter
+  healthcheckPath: StringNullableFilter
+  users: UserListRelationFilter
+  environments: EnvironmentListRelationFilter
+  plugins: PluginListRelationFilter
+  projectPermissions: ProjectPermissionListRelationFilter
+  projectTokens: ProjectTokenListRelationFilter
+  inviteCodes: InviteCodeListRelationFilter
+  deployments: DeploymentListRelationFilter
+  Log: LogListRelationFilter
+  integrations: IntegrationListRelationFilter
+  deploymentTriggers: DeploymentTriggerListRelationFilter
+  webhooks: ProjectWebhookListRelationFilter
+  team: TeamWhereInput
+  teamId: StringNullableFilter
+  partnerProject: PartnerProjectWhereInput
+  partnerProjectId: StringNullableFilter
+  services: ServiceListRelationFilter
+}
+
+input ProjectWhereUniqueInput {
+  id: String
+}
+
+type ProviderAuth {
+  id: String!
+  provider: String!
+  email: String!
+  metadata: Json!
+  userId: String!
+}
+
+input ProviderAuthListRelationFilter {
+  every: ProviderAuthWhereInput
+  some: ProviderAuthWhereInput
+  none: ProviderAuthWhereInput
+}
+
+input ProviderAuthOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ProviderAuthProviderIdDeletedAtCompoundUniqueInput {
+  providerId: String!
+  deletedAt: DateTime!
+}
+
+input ProviderAuthWhereInput {
+  AND: [ProviderAuthWhereInput!]
+  OR: [ProviderAuthWhereInput!]
+  NOT: [ProviderAuthWhereInput!]
+  id: StringFilter
+  provider: StringFilter
+  providerId: StringFilter
+  email: StringFilter
+  accessToken: StringFilter
+  refreshToken: StringFilter
+  user: UserWhereInput
+  userId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+}
+
+input ProviderAuthWhereUniqueInput {
+  id: String
+  providerId_deletedAt: ProviderAuthProviderIdDeletedAtCompoundUniqueInput
+}
+
+type QRCode {
+  uri: String!
+  secret: String!
+}
+
+type Query {
+  allContainers(limit: Int, offset: Int): [Container!]!
+  # Get all custom domains for an environment
+  allCustomDomainsForEnvironment(
+    projectId: String!
+    environmentId: String!
+  ): [CustomDomain!]!
+  # Checks if an environment domain is available
+  isCustomDomainAvailable(domain: String!): DomainAvailable!
+  # Get a customer for the authenticated user. Creates customer if it doesn't exist
+  getCustomerForUser: Customer!
+  # Get a customer for a team. Creates customer if it doesn't exist
+  getCustomerForTeam(teamId: String!): Customer!
+  # Find a deployment by id
+  deploymentById(projectId: ID!, deploymentId: ID!): Deployment!
+  # Find a deployment by public url
+  deploymentByDomain(domain: String!): DeploymentByDomain!
+  # Get all deployments for a project
+  allDeploymentsForProject(
+    projectId: ID!
+    environmentId: ID
+    serviceId: ID
+  ): [Deployment!]!
+  # Get all deployments for an environment
+  allDeploymentsForEnvironment(
+    projectId: ID!
+    environmentId: ID!
+  ): [Deployment!]! @deprecated(reason: "Use allDeploymentsForProject instead")
+  # Get all deployments
+  allDeployments(
+    status: DeployStatus
+    limit: Int
+    offset: Int
+  ): PaginatedDeploys!
+  # Get all deployment triggers by projectId
+  getDeploymentTriggersByProject(
+    projectId: ID!
+    environmentId: ID
+    serviceId: ID
+  ): [DeploymentTrigger!]!
+  # Check if elasticsearch container is up
+  elasticIsUp(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Boolean!
+  # Get all indicies in elasticsearch container
+  elasticGetIndicies(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): [ElasticIndex!]!
+  # Search an index in an elasticsearch container
+  elasticSearchIndex(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    search: String!
+    index: String
+    from: Int
+    size: Int
+  ): ElasticSearchResult!
+  # Get an environment by id
+  environmentById(projectId: String!, environmentId: String!): Environment!
+  # Get all the environments for a project
+  allProjectEnvironments(projectId: String!): [Environment!]!
+  # Checks if a custom domain is available
+  isEnvironmentDomainAvailable(domain: String!): DomainAvailable!
+  # Get a list of suggested variables for a repo
+  getSuggestedVariables(projectId: ID!, environmentId: ID!): Json!
+  # Find generic plugin for plugin
+  genericPlugin(projectId: ID!, pluginId: ID!): GenericPlugin!
+  # Get a list of scopes the user has installed the installation to
+  getWritableGithubScopes: [String!]!
+  # Get list of repos connected by user
+  getAvailableGitHubRepos: [GitHubRepo!]!
+  # Get branches for a github repo
+  getBranchesForGitHubRepo(owner: String!, repo: String!): [GitHubBranch!]!
+  # Returns whether or not a repo name is available for a user
+  isRepoNameAvailable(fullRepoName: String!): Boolean!
+  # Get all integration auths for a user
+  integrationAuths: [IntegrationAuth!]!
+  # Get all integrations for a project
+  integrations(projectId: String!): [Integration!]!
+  # Get an integration auth by provider providerId
+  integrationAuth(provider: String!, providerId: String!): IntegrationAuth!
+  # Get an invite code by code
+  findInviteCodeByCode(code: String!): InviteCode!
+  # Project invite codes for a specifc role
+  inviteCode(projectId: String!, role: String!): InviteCode!
+  # Gets users who belong to a project along with their role
+  projectMembers(projectId: ID!): [Member!]!
+  metricsForEnvironment(
+    projectId: String!
+    environmentId: String!
+    startDate: String
+    endDate: String
+    samplingRate: Int
+  ): EnvironmentMetrics!
+  # Get a list of database names in a MongoDB container
+  mongoDatabaseNames(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): [String!]!
+  # Get a list of collection names in a MongoDB container
+  mongoCollectionNames(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+  ): [String!]!
+  # Get a collection in a MongoDB container
+  mongoCollectionData(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    database: String!
+    name: String!
+  ): MongoCollection!
+  # Find available plugins by project id
+  availablePluginsForProject(projectId: ID!): [String!]!
+  # Find a project by id
+  projectById(projectId: ID!): Project!
+  allProjects(
+    query: String
+    limit: Int
+    offset: Int
+    expired: Boolean
+    deleted: Boolean
+  ): PaginatedProjects!
+  topProjects(
+    resource: String!
+    startDate: String
+    endDate: String
+    limit: Int
+    page: Int
+  ): [Project!]!
+  # Get a single project token by the value in the header
+  projectToken: ProjectToken!
+  # Get all project tokens for a project
+  projectTokens(projectId: String!): [ProjectToken!]!
+  # Get all webhooks belonging to a project
+  projectWebhooks(projectId: ID!): [ProjectWebhook!]!
+  # Get a list of keys in a Redis container
+  redisKeys(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): [RedisKey!]!
+  # Get data for key in a Redis container
+  redisGetKey(
+    key: String!
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Json!
+  # Get requested plugins for user
+  requestedPlugins: [RequestedPlugin!]!
+  # Get all requested plugins
+  allRequestedPlugins: [RequestedPlugin!]!
+  # Get a requested plugin by name
+  requestedPluginCountByName(name: String!): Int!
+  # Get a list of table names in SQLQL container
+  getSQLTableNames(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+  ): [String!]!
+  # Get rows for a SQLQL table
+  getSQLTable(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+    databaseType: String!
+    name: String!
+    limit: Int
+    offset: Int
+  ): SQLTable!
+  stats: Stats!
+  # Get a single starter from GitHub
+  getStarter(href: String, slug: String): Starter!
+  # Get all starters from Github
+  getAllStarters: [Starter!]!
+  # Find a team by id
+  teamById(teamId: ID!): Team!
+  # Get a team for an invite code
+  findTeamByCode(code: String!): Team!
+  # Return all teams
+  allTeams(
+    limit: Int
+    offset: Int
+    query: String
+    usageSubscription: Boolean
+  ): PaginatedTeams!
+  # Checks 2FA setup status for authenticated user
+  getTwoFactorStatus: TwoFactorInfo!
+  # Get the currently authenticated user
+  me: User!
+  # Get a user by id
+  getUser(userId: String!): User!
+  allUsers(
+    limit: Int
+    offset: Int
+    query: String
+    earlyAdopter: Boolean
+    riskLevel: Float
+    banned: Boolean
+    admin: Boolean
+    usageSubscription: Boolean
+    referredUsers: Boolean
+  ): PaginatedUsers!
+  # Verify if a login session is valid
+  verifyLoginSession(code: String!): Boolean!
+  vercelInfo: VercelInfo!
+  # Get the usage stats for a project in the provided date billing period
+  usageForProject(projectId: String!, date: String): ProjectUsage!
+  # Get the usage in USD for all projects belonging to a user over the last 30 days
+  usageForUserProjects(userId: String!, date: String): [ProjectUsage!]!
+  # Get the usage in USD for all projects belonging to a team over the last 30 days
+  usageForTeamProjects(teamId: String!, date: String): [ProjectUsage!]!
+  # Get the status of a workflow
+  getWorkflowStatus(workflowId: String!): WorkflowResult!
+  # Get all sessions for authenticated user
+  getSessions: [Session!]!
+  # Get all users with same hashed IP as specified user
+  getUsersWithClashingIPs(userId: ID!): [UserWithClashingIP!]!
+  # Get preferences for logged in user
+  getUserPreferences: Preferences!
+  # Get all the decrypted rendered variables that belong to a plugin in an environment
+  decryptedVariables(
+    projectId: String!
+    environmentId: String!
+    pluginId: String
+    serviceId: String
+    unrendered: Boolean
+  ): Json!
+  # Get all the environment variables that belong to a specific environment
+  allEnvsForEnvironment(projectId: String!, environmentId: String!): Json!
+    @deprecated(reason: "Use decryptedVariablesQuery instead")
+  # Get all the environment variables for a plugin in an environment
+  allEnvsForPlugin(
+    projectId: String!
+    environmentId: String!
+    pluginId: String!
+  ): Json! @deprecated(reason: "Use decryptedVariablesQuery instead instead")
+  # Gets the referral details for a user
+  getReferralDetails: ReferralDetails!
+  # Get the ban reason history for a user
+  getBanReasonHistory(userId: ID!): [BanReasonHistory!]!
+  getAllPartnerProjects(
+    query: String
+    limit: Int
+    offset: Int
+  ): PaginatedPartnerProjects!
+  getProjectsForPartner(teamId: ID): [PartnerProject!]!
+  getPartnerProject(id: ID!): PartnerProject!
+  getPartnerPayout(date: String!): PartnerPayout!
+  getPayoutForProject(
+    partnerProjectId: ID!
+    kickbackPercent: Int!
+  ): PartnerPayoutForProject!
+  # Get a Verification Appeal for the authenticated user
+  getUserVerificationAppeal: VerificationAppeal!
+  # Get all pending verification appeals.
+  getAllVerificationAppeals(
+    query: String
+    limit: Int
+    offset: Int
+    pending: Boolean
+  ): PaginatedVerificationAppeals!
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+# Response returned after running a raw query
+type RawQueryResponse {
+  raw: Json!
+}
+
+# A key and associated type belonging to a Redis database
+type RedisKey {
+  name: String!
+  type: String!
+  ttl: BigInt
+}
+
+type ReferralDetails {
+  referralInfo: ReferralInfo
+  referredUsers: [ReferralInfo!]!
+}
+
+type ReferralInfo {
+  id: String!
+  code: String!
+  status: ReferralStatus!
+}
+
+input ReferralInfoListRelationFilter {
+  every: ReferralInfoWhereInput
+  some: ReferralInfoWhereInput
+  none: ReferralInfoWhereInput
+}
+
+input ReferralInfoOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ReferralInfoOrderByWithRelationInput {
+  id: SortOrder
+  code: SortOrder
+  status: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  referrer: UserOrderByWithRelationInput
+  referrerId: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+input ReferralInfoWhereInput {
+  AND: [ReferralInfoWhereInput!]
+  OR: [ReferralInfoWhereInput!]
+  NOT: [ReferralInfoWhereInput!]
+  id: StringFilter
+  code: StringFilter
+  status: EnumReferralStatusFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  referrer: UserWhereInput
+  referrerId: StringNullableFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+enum ReferralStatus {
+  REGISTERED
+  REFEREE_CREDITED
+  REFERRER_CREDITED
+}
+
+enum RegistrationStatus {
+  ONBOARDED
+  REGISTERED
+  WAITLISTED
+}
+
+type RequestedPlugin {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  numUsers: Int!
+}
+
+input RequestedPluginListRelationFilter {
+  every: RequestedPluginWhereInput
+  some: RequestedPluginWhereInput
+  none: RequestedPluginWhereInput
+}
+
+input RequestedPluginOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input RequestedPluginWhereInput {
+  AND: [RequestedPluginWhereInput!]
+  OR: [RequestedPluginWhereInput!]
+  NOT: [RequestedPluginWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  name: StringFilter
+  users: UserListRelationFilter
+}
+
+input RequestedPluginWhereUniqueInput {
+  id: String
+  name: String
+}
+
+type ResourceAccess {
+  project: AccessRule!
+  plugin: AccessRule!
+  environment: AccessRule!
+  deployment: AccessRule!
+}
+
+input RiskLevelHistoryListRelationFilter {
+  every: RiskLevelHistoryWhereInput
+  some: RiskLevelHistoryWhereInput
+  none: RiskLevelHistoryWhereInput
+}
+
+input RiskLevelHistoryOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input RiskLevelHistoryWhereInput {
+  AND: [RiskLevelHistoryWhereInput!]
+  OR: [RiskLevelHistoryWhereInput!]
+  NOT: [RiskLevelHistoryWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  riskLevel: FloatNullableFilter
+  user: UserWhereInput
+  userId: StringFilter
+  actor: UserWhereInput
+  actorId: StringNullableFilter
+}
+
+type Service {
+  id: String!
+  name: String!
+  prDeploys: Boolean
+  source: Json!
+  experimentalBuilder: Boolean
+  healthcheckPath: String
+  project: Project!
+  projectId: String!
+  sourceConnections(
+    first: Int
+    last: Int
+    before: ConnectionWhereUniqueInput
+    after: ConnectionWhereUniqueInput
+  ): [Connection!]!
+  targetConnections(
+    first: Int
+    last: Int
+    before: ConnectionWhereUniqueInput
+    after: ConnectionWhereUniqueInput
+  ): [Connection!]!
+  repoTriggers(
+    first: Int
+    last: Int
+    before: DeploymentTriggerWhereUniqueInput
+    after: DeploymentTriggerWhereUniqueInput
+  ): [DeploymentTrigger!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+input ServiceListRelationFilter {
+  every: ServiceWhereInput
+  some: ServiceWhereInput
+  none: ServiceWhereInput
+}
+
+input ServiceNameProjectIdCompoundUniqueInput {
+  name: String!
+  projectId: String!
+}
+
+input ServiceOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input ServiceOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  project: ProjectOrderByWithRelationInput
+  projectId: SortOrder
+  prDeploys: SortOrder
+  healthcheckPath: SortOrder
+  experimentalBuilder: SortOrder
+  source: SortOrder
+  customDomains: CustomDomainOrderByRelationAggregateInput
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  deletedAt: SortOrder
+  repoTriggers: DeploymentTriggerOrderByRelationAggregateInput
+  sourceConnections: ConnectionOrderByRelationAggregateInput
+  targetConnections: ConnectionOrderByRelationAggregateInput
+  deployments: DeploymentOrderByRelationAggregateInput
+  variables: VariableOrderByRelationAggregateInput
+}
+
+input ServiceWhereInput {
+  AND: [ServiceWhereInput!]
+  OR: [ServiceWhereInput!]
+  NOT: [ServiceWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  project: ProjectWhereInput
+  projectId: StringFilter
+  prDeploys: BoolNullableFilter
+  healthcheckPath: StringNullableFilter
+  experimentalBuilder: BoolNullableFilter
+  customDomains: CustomDomainListRelationFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  repoTriggers: DeploymentTriggerListRelationFilter
+  sourceConnections: ConnectionListRelationFilter
+  targetConnections: ConnectionListRelationFilter
+  deployments: DeploymentListRelationFilter
+  variables: VariableListRelationFilter
+}
+
+input ServiceWhereUniqueInput {
+  id: String
+  name_projectId: ServiceNameProjectIdCompoundUniqueInput
+}
+
+type Session {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiredAt: DateTime!
+  type: SessionType!
+  name: String!
+  isCurrent: Boolean!
+}
+
+input SessionListRelationFilter {
+  every: SessionWhereInput
+  some: SessionWhereInput
+  none: SessionWhereInput
+}
+
+input SessionOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+enum SessionType {
+  CLI
+  BROWSER
+}
+
+input SessionWhereInput {
+  AND: [SessionWhereInput!]
+  OR: [SessionWhereInput!]
+  NOT: [SessionWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  type: EnumSessionTypeFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  expiredAt: DateTimeFilter
+  hashedIP: StringFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input SQLColumnInput {
+  name: String!
+  type: String!
+  default: String
+  constraint: String
+}
+
+input SQLRowInput {
+  name: String!
+  value: String!
+}
+
+# A table belonging to an SQL database
+type SQLTable {
+  name: String!
+  primaryKey: String!
+  totalRows: Int!
+  columnNames: [String!]!
+  columnTypes: [Int!]!
+  rows: [Json!]!
+}
+
+type Starter {
+  title: String!
+  description: String!
+  url: String!
+  source: String!
+  content: String!
+  isPartnerProject: Boolean!
+  tags: [String!]
+}
+
+type Stats {
+  numUsers: Int!
+  numProjects: Int!
+  numContainers: Int!
+  numSubscribed: Int!
+  numEarlyAdopters: Int!
+  numTeams: Int!
+  numDeploysTotal: Int!
+  numDeploysActive: Int!
+  deploysLastHour: Int!
+  dailyActiveProjects: Int!
+  totalPlatformUsage: TotalUsage
+  latestDeploys: [Deployment!]!
+  latestProjects: [Project!]!
+  activeProjects: [Project!]!
+  latestUsers: [User!]!
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+type SubscriptionItem {
+  itemId: String!
+  productId: String!
+  priceId: String!
+  quantity: Int
+}
+
+enum SubscriptionState {
+  INACTIVE
+  ACTIVE
+  PAST_DUE
+  UNPAID
+  CANCELLED
+}
+
+type Team {
+  id: String!
+  name: String!
+  avatar: String
+  projects(
+    where: ProjectWhereInput
+    orderBy: [ProjectOrderByWithRelationInput!]
+    first: Int
+    last: Int
+    before: ProjectWhereUniqueInput
+    after: ProjectWhereUniqueInput
+  ): [Project!]!
+  customer: Customer
+  teamPermissions(
+    first: Int
+    last: Int
+    before: TeamPermissionWhereUniqueInput
+    after: TeamPermissionWhereUniqueInput
+  ): [TeamPermission!]!
+  members: [TeamMember!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  resourceAccess: ResourceAccess!
+}
+
+input TeamListRelationFilter {
+  every: TeamWhereInput
+  some: TeamWhereInput
+  none: TeamWhereInput
+}
+
+type TeamMember {
+  id: String!
+  email: String!
+  name: String
+  avatar: String
+  role: TeamRole!
+}
+
+input TeamOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input TeamOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  avatar: SortOrder
+  members: UserOrderByRelationAggregateInput
+  projects: ProjectOrderByRelationAggregateInput
+  teamPermissions: TeamPermissionOrderByRelationAggregateInput
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  deletedAt: SortOrder
+  customer: CustomerOrderByWithRelationInput
+}
+
+type TeamPermission {
+  id: String!
+  role: TeamRole!
+  teamId: String!
+  userId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input TeamPermissionListRelationFilter {
+  every: TeamPermissionWhereInput
+  some: TeamPermissionWhereInput
+  none: TeamPermissionWhereInput
+}
+
+input TeamPermissionOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input TeamPermissionUserIdTeamIdCompoundUniqueInput {
+  userId: String!
+  teamId: String!
+}
+
+input TeamPermissionWhereInput {
+  AND: [TeamPermissionWhereInput!]
+  OR: [TeamPermissionWhereInput!]
+  NOT: [TeamPermissionWhereInput!]
+  id: StringFilter
+  role: EnumTeamRoleFilter
+  user: UserWhereInput
+  team: TeamWhereInput
+  userId: StringFilter
+  teamId: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+}
+
+input TeamPermissionWhereUniqueInput {
+  id: String
+  userId_teamId: TeamPermissionUserIdTeamIdCompoundUniqueInput
+}
+
+enum TeamRole {
+  ADMIN
+  MEMBER
+}
+
+input TeamWhereInput {
+  AND: [TeamWhereInput!]
+  OR: [TeamWhereInput!]
+  NOT: [TeamWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  avatar: StringNullableFilter
+  members: UserListRelationFilter
+  projects: ProjectListRelationFilter
+  teamPermissions: TeamPermissionListRelationFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  deletedAt: DateTimeNullableFilter
+  customer: CustomerWhereInput
+}
+
+input TeamWhereUniqueInput {
+  id: String
+}
+
+type TotalUsage {
+  current: Float!
+  estimated: Float!
+}
+
+type TwoFactorInfo {
+  isVerified: Boolean!
+}
+
+input TwoFactorInfoOrderByWithRelationInput {
+  id: SortOrder
+  authenticatorAppSecret: SortOrder
+  isVerified: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+input TwoFactorInfoWhereInput {
+  AND: [TwoFactorInfoWhereInput!]
+  OR: [TwoFactorInfoWhereInput!]
+  NOT: [TwoFactorInfoWhereInput!]
+  id: StringFilter
+  authenticatorAppSecret: StringFilter
+  isVerified: BoolFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+type UsageBucket {
+  date: String!
+  usage: UsageItem!
+  avgUsage: UsageItem!
+}
+
+type UsageItem {
+  cpuPercentvCPU: Float!
+  memoryUsageGB: Float!
+}
+
+type User {
+  id: String!
+  email: String!
+  name: String
+  avatar: String
+  projects(
+    where: ProjectWhereInput
+    orderBy: [ProjectOrderByWithRelationInput!]
+    first: Int
+    last: Int
+    before: ProjectWhereUniqueInput
+    after: ProjectWhereUniqueInput
+  ): [Project!]!
+  customer: Customer
+  providerAuths(
+    first: Int
+    last: Int
+    before: ProviderAuthWhereUniqueInput
+    after: ProviderAuthWhereUniqueInput
+  ): [ProviderAuth!]!
+  isAdmin: Boolean!
+  createdAt: DateTime!
+  lastLogin: DateTime!
+  requestedPlugins(
+    first: Int
+    last: Int
+    before: RequestedPluginWhereUniqueInput
+    after: RequestedPluginWhereUniqueInput
+  ): [RequestedPlugin!]!
+  registrationStatus: RegistrationStatus!
+  plan: Plan!
+  banReason: String
+  riskLevel: Float
+  termsAgreedOn: DateTime
+  teams(
+    where: TeamWhereInput
+    first: Int
+    last: Int
+    before: TeamWhereUniqueInput
+    after: TeamWhereUniqueInput
+  ): [Team!]!
+  preferences: Preferences
+  agreedFairUse: Boolean!
+  has2FA: Boolean!
+  cost: UserCost!
+  resourceAccess: ResourceAccess!
+  referredUsers: [ReferralInfo!]!
+}
+
+type UserCost {
+  current: Float!
+  estimated: Float!
+}
+
+input UserListRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
+input UserOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input UserOrderByWithRelationInput {
+  id: SortOrder
+  email: SortOrder
+  name: SortOrder
+  avatar: SortOrder
+  lastLogin: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  projects: ProjectOrderByRelationAggregateInput
+  providerAuths: ProviderAuthOrderByRelationAggregateInput
+  magicAuths: MagicAuthOrderByRelationAggregateInput
+  projectPermissions: ProjectPermissionOrderByRelationAggregateInput
+  tokens: UserTokenOrderByRelationAggregateInput
+  isAdmin: SortOrder
+  plan: SortOrder
+  requestedPlugins: RequestedPluginOrderByRelationAggregateInput
+  registrationStatus: SortOrder
+  IntegrationAuth: IntegrationAuthOrderByRelationAggregateInput
+  customer: CustomerOrderByWithRelationInput
+  upDeployments: DeploymentOrderByRelationAggregateInput
+  teams: TeamOrderByRelationAggregateInput
+  teamPermissions: TeamPermissionOrderByRelationAggregateInput
+  banReason: SortOrder
+  sessions: SessionOrderByRelationAggregateInput
+  termsAgreedOn: SortOrder
+  preferences: PreferencesOrderByWithRelationInput
+  twoFactorInfo: TwoFactorInfoOrderByWithRelationInput
+  riskLevel: SortOrder
+  riskLevelHistory: RiskLevelHistoryOrderByRelationAggregateInput
+  riskLevelActions: RiskLevelHistoryOrderByRelationAggregateInput
+  referralInfo: ReferralInfoOrderByWithRelationInput
+  referredUsers: ReferralInfoOrderByRelationAggregateInput
+  banReasonHistory: BanReasonHistoryOrderByRelationAggregateInput
+  banReasonActions: BanReasonHistoryOrderByRelationAggregateInput
+  verificationAppeal: VerificationAppealOrderByWithRelationInput
+}
+
+input UserTokenListRelationFilter {
+  every: UserTokenWhereInput
+  some: UserTokenWhereInput
+  none: UserTokenWhereInput
+}
+
+input UserTokenOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input UserTokenWhereInput {
+  AND: [UserTokenWhereInput!]
+  OR: [UserTokenWhereInput!]
+  NOT: [UserTokenWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  hashedToken: StringFilter
+  displayToken: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: StringFilter
+  email: StringFilter
+  name: StringNullableFilter
+  avatar: StringNullableFilter
+  lastLogin: DateTimeFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  projects: ProjectListRelationFilter
+  providerAuths: ProviderAuthListRelationFilter
+  magicAuths: MagicAuthListRelationFilter
+  projectPermissions: ProjectPermissionListRelationFilter
+  tokens: UserTokenListRelationFilter
+  isAdmin: BoolFilter
+  plan: EnumPlanFilter
+  requestedPlugins: RequestedPluginListRelationFilter
+  registrationStatus: EnumRegistrationStatusFilter
+  IntegrationAuth: IntegrationAuthListRelationFilter
+  customer: CustomerWhereInput
+  upDeployments: DeploymentListRelationFilter
+  teams: TeamListRelationFilter
+  teamPermissions: TeamPermissionListRelationFilter
+  banReason: StringNullableFilter
+  sessions: SessionListRelationFilter
+  termsAgreedOn: DateTimeNullableFilter
+  preferences: PreferencesWhereInput
+  twoFactorInfo: TwoFactorInfoWhereInput
+  riskLevel: FloatNullableFilter
+  riskLevelHistory: RiskLevelHistoryListRelationFilter
+  riskLevelActions: RiskLevelHistoryListRelationFilter
+  referralInfo: ReferralInfoWhereInput
+  referredUsers: ReferralInfoListRelationFilter
+  banReasonHistory: BanReasonHistoryListRelationFilter
+  banReasonActions: BanReasonHistoryListRelationFilter
+  verificationAppeal: VerificationAppealWhereInput
+}
+
+type UserWithClashingIP {
+  id: String!
+  email: String!
+}
+
+type Variable {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  plugin: Plugin
+  pluginId: String
+  service: Service
+  serviceId: String
+  environment: Environment!
+  environmentId: String!
+}
+
+input VariableListRelationFilter {
+  every: VariableWhereInput
+  some: VariableWhereInput
+  none: VariableWhereInput
+}
+
+input VariableNamePluginIdEnvironmentIdCompoundUniqueInput {
+  name: String!
+  pluginId: String!
+  environmentId: String!
+}
+
+input VariableNameServiceIdEnvironmentIdCompoundUniqueInput {
+  name: String!
+  serviceId: String!
+  environmentId: String!
+}
+
+input VariableOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input VariableWhereInput {
+  AND: [VariableWhereInput!]
+  OR: [VariableWhereInput!]
+  NOT: [VariableWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  name: StringFilter
+  encryptedValue: StringFilter
+  environment: EnvironmentWhereInput
+  environmentId: StringFilter
+  plugin: PluginWhereInput
+  pluginId: StringNullableFilter
+  service: ServiceWhereInput
+  serviceId: StringNullableFilter
+}
+
+input VariableWhereUniqueInput {
+  id: String
+  name_pluginId_environmentId: VariableNamePluginIdEnvironmentIdCompoundUniqueInput
+  name_serviceId_environmentId: VariableNameServiceIdEnvironmentIdCompoundUniqueInput
+}
+
+type VercelAccount {
+  id: String!
+  integrationAuthId: String!
+  isUser: Boolean!
+  slug: String
+  name: String
+  projects: [VercelProject!]!
+}
+
+type VercelInfo {
+  accounts: [VercelAccount!]!
+}
+
+type VercelProject {
+  id: String!
+  name: String!
+  accountId: String!
+}
+
+type VerificationAppeal {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  status: VerificationAppealStatus!
+  user: User!
+  userId: String!
+  repo: String!
+  userMessage: String
+}
+
+input VerificationAppealOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  repo: SortOrder
+  userMessage: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+  status: SortOrder
+}
+
+enum VerificationAppealStatus {
+  APPLIED
+  APPROVED
+  REJECTED
+}
+
+input VerificationAppealWhereInput {
+  AND: [VerificationAppealWhereInput!]
+  OR: [VerificationAppealWhereInput!]
+  NOT: [VerificationAppealWhereInput!]
+  id: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  repo: StringFilter
+  userMessage: StringNullableFilter
+  user: UserWhereInput
+  userId: StringFilter
+  status: EnumVerificationAppealStatusFilter
+}
+
+type WorkflowResult {
+  status: WorkflowStatus!
+}
+
+enum WorkflowStatus {
+  Running
+  Complete
+  Error
+}
+

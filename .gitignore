@@ -9,6 +9,3 @@
 # Added by cargo
 
 /target
-
-# So Cooper doesn't ban us
-src/gql/schema.graphql
