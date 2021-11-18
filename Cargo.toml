@@ -16,7 +16,7 @@ open = "2.0.1"
 hostname = "0.3.1"
 tokio = { version = "1.14.0", features = ["full"] }
 indicatif = "0.16.2"
-dialoguer = "0.9.0"
+dialoguer = {version = "0.9.0", features = ["fuzzy-select"]}
 gzp = "0.9.2"
 reqwest = { version = "0.11.6", features = ["multipart", "stream"] }
 synchronized-writer = "1.1.10"
@@ -27,6 +27,7 @@ serde_json = "1.0.70"
 dirs = "4.0.0"
 base64 = "0.13.0"
 colored = "2"
+chrono = {version = "0.4.19", features = ["serde"]}
 
 [profile.release]
 lto = true

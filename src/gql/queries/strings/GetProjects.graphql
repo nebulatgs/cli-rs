@@ -1,0 +1,34 @@
+query GetProjects {
+  me {
+    name
+    projects {
+      id
+      updatedAt
+      name
+      plugins {
+        id
+        name
+      }
+      environments {
+        id
+        name
+      }
+    }
+    teams {
+      name
+      projects {
+        id
+        updatedAt
+        name
+        plugins {
+          id
+          name
+        }
+        environments {
+          id
+          name
+        }
+      }
+    }
+  }
+}
