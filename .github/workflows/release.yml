@@ -11,29 +11,30 @@ jobs:
         include:
           - build: linux
             os: ubuntu-latest
-            rust: nightly
-            target: x86_64-unknown-linux-musl
-            cross: false
+            rust: stable
+            target: x86_64-unknown-linux-gnu
+            cross: true
           - build: windows
             os: ubuntu-latest
-            rust: nightly
+            rust: stable
             target: x86_64-pc-windows-gnu
-            cross: false
+            linker: gcc-mingw-w64-x86-64-win32
+            cross: true
           - build: arm-v7
             os: ubuntu-latest
-            rust: nightly
+            rust: stable
             target: armv7-unknown-linux-gnueabihf
             linker: gcc-arm-linux-gnueabihf
             cross: true
           - build: aarch64
             os: ubuntu-latest
-            rust: nightly
+            rust: stable
             target: aarch64-unknown-linux-gnu
             linker: gcc-aarch64-linux-gnu
             cross: true
           - build: macos
             os: macos-latest
-            rust: nightly
+            rust: stable
             target: x86_64-apple-darwin
             cross: false
     steps:
