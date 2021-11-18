@@ -15,6 +15,7 @@ pub enum RailwayError {
 	InvalidHeaderValue(InvalidHeaderValue),
 	VarError(VarError),
 	ProjectNotFound,
+	EnvironmentNotFound,
 	NotLinked,
 	String(&'static str),
 	Unknown(Box<dyn Error>),
@@ -42,6 +43,13 @@ impl Display for RailwayError {
 			Self::VarError(var_error) => var_error.fmt(f),
 			Self::ProjectNotFound => {
 				write!(f, "{} Tip If you haven't, do railway login\nOtherwise, run {}  to get plugged into a new project, or {} to get plugged into an existing project.", "Project not found.".red(), "railway init".bold(), "railway link".bold())
+			}
+			Self::EnvironmentNotFound => {
+				write!(
+					f,
+					"{}",
+					"Environment does not exist on project. Specify an existing environment".red()
+				)
 			}
 			Self::NotLinked => {
 				write!(f, "{}", "Not linked to a project!".red())

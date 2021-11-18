@@ -109,6 +109,9 @@ async fn main() {
 				RailwayError::NotLinked => {
 					eprintln!("{}", s)
 				}
+				RailwayError::EnvironmentNotFound => {
+					eprintln!("{}", s)
+				}
 				_ => {
 					eprintln!("Error in command \'{}\': {}", name, s)
 				}

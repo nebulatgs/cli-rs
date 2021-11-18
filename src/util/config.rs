@@ -6,6 +6,8 @@ use tokio::{
 	io::{AsyncReadExt, AsyncWriteExt},
 };
 
+use super::errors::RailwayError;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Project {
 	#[serde(rename = "projectPath")]
@@ -87,6 +89,31 @@ impl Configs {
 			base_url = "https://backboard.railway-staging.app"
 		}
 		base_url.to_string()
+	}
+	pub fn get_current_working_directory() -> super::UtilResult<String> {
+		let current_dir = std::env::current_dir()?;
+		let path = current_dir
+			.to_str()
+			.ok_or("Unable to get current working directory")?;
+		Ok(path.into())
+	}
+	pub fn get_linked_project(&self) -> super::UtilResult<&Project> {
+		let path = Self::get_current_working_directory()?;
+		let project = self
+			.root_config
+			.projects
+			.get(&path)
+			.ok_or(RailwayError::NotLinked)?;
+		Ok(project)
+	}
+	pub fn unlink_project(&mut self) -> super::UtilResult<Project> {
+		let path = Self::get_current_working_directory()?;
+		let project = self
+			.root_config
+			.projects
+			.remove(&path)
+			.ok_or(RailwayError::NotLinked)?;
+		Ok(project)
 	}
 	pub async fn write(&self) -> super::UtilResult<()> {
 		let mut file = File::create(&self.root_config_path).await?;

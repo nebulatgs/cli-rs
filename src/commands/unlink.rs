@@ -1,11 +1,7 @@
 use crate::{
 	gql::queries::get_project,
 	gql::queries::GetProject,
-	util::{
-		client::GQLClient,
-		config::{Configs, Project},
-		errors::RailwayError,
-	},
+	util::{client::GQLClient, config::Configs},
 };
 use clap::Parser;
 use colored::Colorize;
@@ -15,16 +11,7 @@ pub struct Args;
 
 pub async fn command(_args: Args) -> super::CommandResult {
 	let mut config = Configs::new().await?;
-	let current_dir = std::env::current_dir()?;
-	let path = current_dir
-		.to_str()
-		.ok_or("Unable to get current working directory")?;
-	let project_id = &config
-		.root_config
-		.projects
-		.remove(path)
-		.ok_or(RailwayError::NotLinked)?
-		.project;
+	let project_id = config.unlink_project()?.project;
 	config.write().await?;
 	let client = GQLClient::new_authorized(&config)?;
 	let res = post_graphql::<GetProject, _>(
