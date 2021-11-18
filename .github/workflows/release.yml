@@ -1,24 +1,117 @@
+name: Deploy
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "v*"
+
+env:
+  CARGO_INCREMENTAL: 0
 
 jobs:
-  release:
-    name: release ${{ matrix.target }}
-    runs-on: ubuntu-latest
+  # Build sources for every OS
+  github_build:
+    name: Build release binaries
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: x86_64-pc-windows-gnu
-            archive: zip
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: railway-x86_64-unknown-linux-gnu.tar.gz
+
           - target: x86_64-unknown-linux-musl
-            archive: tar.gz tar.xz
+            os: ubuntu-latest
+            name: railway-x86_64-unknown-linux-musl.tar.gz
+
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            name: railway-i686-unknown-linux-musl.tar.gz
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            name: railway-aarch64-unknown-linux-musl.tar.gz
+
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: railway-arm-unknown-linux-musleabihf.tar.gz
+
           - target: x86_64-apple-darwin
-            archive: zip
+            os: macOS-latest
+            name: railway-x86_64-apple-darwin.tar.gz
+
+          - target: aarch64-apple-darwin
+            os: macOS-latest
+            name: railway-aarch64-apple-darwin.tar.gz
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: railway-x86_64-pc-windows-msvc.zip
+
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: railway-i686-pc-windows-msvc.zip
+
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+            name: railway-aarch64-pc-windows-msvc.zip
+
+          # - target: x86_64-unknown-freebsd
+          #   os: ubuntu-latest
+          #   name: railway-x86_64-unknown-freebsd.tar.gz
+
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
     steps:
-      - uses: actions/checkout@master
-      - name: Compile and release
-        uses: rust-build/rust-build.action@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup | Checkout
+        uses: actions/checkout@v2.3.5
+
+      - name: Setup | Rust
+        uses: actions-rs/toolchain@v1.0.7
+        with:
+          toolchain: stable
+          override: true
+          profile: minimal
+          target: ${{ matrix.target }}
+
+      - name: Setup | Cache Cargo
+        uses: actions/cache@v2.1.6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build | Build
+        uses: actions-rs/cargo@v1.0.3
+        with:
+          command: build
+          args: --release --locked --target ${{ matrix.target }}
+          use-cross: ${{ matrix.os == 'ubuntu-latest' }}
+
+      - name: Post Build | Prepare artifacts [Windows]
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          strip railway.exe
+          7z a ../../../${{ matrix.name }} railway.exe
+          cd -
+
+      - name: Post Build | Prepare artifacts [-nix]
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          # TODO: investigate better cross platform stripping
+          strip railway || true
+          tar czvf ../../../${{ matrix.name }} railway
+          cd -
+
+      - name: Deploy | Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ matrix.name }}
+      - name: Build | Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: glitter-*/glitter-*
+          body_path: RELEASE.md

@@ -1,11 +1,10 @@
 use clap::Parser;
 use colored::Colorize;
-use graphql_client::reqwest::post_graphql;
 
 use crate::{
 	gql::queries::get_user,
 	gql::queries::GetUser,
-	util::{client::GQLClient, config::Configs},
+	util::{client::post_graphql, client::GQLClient, config::Configs},
 };
 
 #[derive(Parser)]

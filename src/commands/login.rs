@@ -1,12 +1,14 @@
-use crate::gql::mutations::{consume_login_session, create_login_session};
-use crate::gql::mutations::{ConsumeLoginSession, CreateLoginSession};
-use crate::gql::queries::get_user;
-use crate::gql::queries::GetUser;
-use crate::util::client::GQLClient;
-use crate::util::config::Configs;
+use crate::{
+	gql::{
+		mutations::{
+			consume_login_session, create_login_session, ConsumeLoginSession, CreateLoginSession,
+		},
+		queries::{get_user, GetUser},
+	},
+	util::{client::post_graphql, client::GQLClient, config::Configs},
+};
 use clap::Parser;
 use colored::Colorize;
-use graphql_client::reqwest::post_graphql;
 use std::io::stdin;
 use std::time::Duration;
 

@@ -1,11 +1,10 @@
 use crate::{
 	gql::queries::get_project,
 	gql::queries::GetProject,
-	util::{client::GQLClient, config::Configs},
+	util::{client::post_graphql, client::GQLClient, config::Configs},
 };
 use clap::Parser;
 use colored::Colorize;
-use graphql_client::reqwest::post_graphql;
 #[derive(Parser)]
 pub struct Args;
 

@@ -1,3 +1,4 @@
+use graphql_client::{GraphQLQuery, Response};
 use reqwest::{
 	header::{HeaderMap, HeaderValue},
 	Client,
@@ -39,4 +40,15 @@ impl GQLClient {
 			.build()?;
 		Ok(client)
 	}
+}
+
+pub async fn post_graphql<Q: GraphQLQuery, U: reqwest::IntoUrl>(
+	client: &reqwest::Client,
+	url: U,
+	variables: Q::Variables,
+) -> Result<Response<Q::ResponseData>, reqwest::Error> {
+	let body = Q::build_query(variables);
+	let reqwest_response = client.post(url).json(&body).send().await?;
+
+	Ok(reqwest_response.json().await?)
 }
