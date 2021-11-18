@@ -113,5 +113,5 @@ jobs:
       - name: Build | Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: railway-*/railway-*
+          files: railway-*
           body_path: RELEASE.md
