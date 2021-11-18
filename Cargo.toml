@@ -23,7 +23,7 @@ synchronized-writer = "1.1.10"
 futures = "0.3.17"
 graphql_client = {version = "0.10.0", features = ["reqwest"]}
 serde = {version = "1.0.130", features = ["derive"]}
-serde_json = "1.0.70"
+serde_json = "1.0.71"
 dirs = "4.0.0"
 base64 = "0.13.0"
 colored = "2"
