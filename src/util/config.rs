@@ -106,6 +106,15 @@ impl Configs {
 			.ok_or(RailwayError::NotLinked)?;
 		Ok(project)
 	}
+	pub fn get_linked_project_mut(&mut self) -> super::UtilResult<&mut Project> {
+		let path = Self::get_current_working_directory()?;
+		let project = self
+			.root_config
+			.projects
+			.get_mut(&path)
+			.ok_or(RailwayError::NotLinked)?;
+		Ok(project)
+	}
 	pub fn unlink_project(&mut self) -> super::UtilResult<Project> {
 		let path = Self::get_current_working_directory()?;
 		let project = self

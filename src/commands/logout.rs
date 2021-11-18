@@ -11,7 +11,7 @@ use crate::{
 #[derive(Parser)]
 pub struct Args;
 
-pub async fn command(args: Args) -> super::CommandResult {
+pub async fn command(_args: Args) -> super::CommandResult {
 	let config = Configs::new().await?;
 	if config.root_config.user.token.is_none() {
 		eprintln!("{}", "🚪  Already logged out".yellow());

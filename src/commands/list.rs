@@ -4,14 +4,14 @@ use graphql_client::reqwest::post_graphql;
 use crate::{
 	gql::queries::get_projects,
 	gql::queries::GetProjects,
-	util::{client::GQLClient, config::Configs, errors::RailwayError},
+	util::{client::GQLClient, config::Configs},
 };
 use colored::Colorize;
 
 #[derive(Parser)]
 pub struct Args;
 
-pub async fn command(args: Args) -> super::CommandResult {
+pub async fn command(_args: Args) -> super::CommandResult {
 	let config = Configs::new().await?;
 	let client = GQLClient::new_authorized(&config)?;
 	let res = post_graphql::<GetProjects, _>(
