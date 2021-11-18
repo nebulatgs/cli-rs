@@ -5,6 +5,8 @@ pub mod util;
 use clap::{AppSettings, ColorChoice, Parser};
 use commands::*;
 
+use crate::util::errors::RailwayError;
+
 /// Interact with 🚅 Railway via CLI
 /// Deploy infrastructure, instantly. Docs: https://docs.railway.app
 #[derive(Parser)]
@@ -97,7 +99,17 @@ async fn main() {
 	let cmd_name = std::env::args().nth(1);
 	if let Some(name) = cmd_name {
 		if let Err(s) = res {
-			eprintln!("Error in command \'{}\': {}", name, s)
+			match s {
+				RailwayError::ProjectNotFound => {
+					eprintln!("{}", s)
+				}
+				RailwayError::Unauthorized => {
+					eprintln!("{}", s)
+				}
+				_ => {
+					eprintln!("Error in command \'{}\': {}", name, s)
+				}
+			}
 		}
 	}
 }

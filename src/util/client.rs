@@ -1,6 +1,9 @@
-use reqwest::{header::HeaderMap, Client};
+use reqwest::{
+	header::{HeaderMap, HeaderValue},
+	Client,
+};
 
-use super::config::Configs;
+use super::{config::Configs, errors::RailwayError};
 
 pub struct GQLClient;
 
@@ -8,13 +11,19 @@ impl GQLClient {
 	pub fn new_authorized(configs: &Configs) -> super::UtilResult<Client> {
 		let mut headers = HeaderMap::new();
 		if let Some(token) = &Configs::get_railway_token() {
-			headers.insert("project-access-token", token.parse()?);
+			headers.insert("project-access-token", HeaderValue::from_str(token)?);
 		} else if let Some(token) = &configs.root_config.user.token {
-			headers.insert("authorization", format!("Bearer {}", token).parse()?);
+			if token.is_empty() {
+				return Err(RailwayError::Unauthorized);
+			}
+			headers.insert(
+				"authorization",
+				HeaderValue::from_str(&format!("Bearer {}", token))?,
+			);
 		} else {
-			return Err("Failed to authorize request".into());
+			return Err(RailwayError::Unauthorized);
 		}
-		headers.insert("x-source", "cli-rs".parse()?);
+		headers.insert("x-source", HeaderValue::from_static("cli-rs"));
 		let client = Client::builder()
 			.user_agent("cli-rs/0.0.0")
 			.default_headers(headers)
@@ -23,7 +32,7 @@ impl GQLClient {
 	}
 	pub fn new_unauthorized() -> super::UtilResult<Client> {
 		let mut headers = HeaderMap::new();
-		headers.insert("x-source", "cli-rs".parse()?);
+		headers.insert("x-source", HeaderValue::from_static("cli-rs"));
 		let client = Client::builder()
 			.user_agent("cli-rs/0.0.0")
 			.default_headers(headers)

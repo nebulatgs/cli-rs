@@ -1,3 +1,5 @@
+use crate::util::errors::RailwayError;
+
 pub mod add;
 pub mod connect;
 pub mod delete;
@@ -19,4 +21,4 @@ pub mod variables;
 pub mod version;
 pub mod whoami;
 
-type CommandResult = Result<(), Box<dyn std::error::Error + Send + Sync>>;
+type CommandResult = Result<(), RailwayError>;
