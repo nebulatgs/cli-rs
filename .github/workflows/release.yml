@@ -110,3 +110,8 @@ jobs:
         with:
           name: ${{ matrix.name }}
           path: ${{ matrix.name }}
+      - name: Build | Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: glitter-*/glitter-*
+          body_path: RELEASE.md
