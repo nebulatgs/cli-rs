@@ -2,6 +2,8 @@ use clap::Parser;
 use colored::Colorize;
 
 use crate::{
+	gql::mutations::delete_project,
+	gql::mutations::DeleteProject,
 	gql::queries::get_projects,
 	gql::queries::GetProjects,
 	util::{client::post_graphql, client::GQLClient, config::Configs, errors::RailwayError},
@@ -55,7 +57,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 	let should_delete = Confirm::with_theme(&ColorfulTheme::default())
 		.with_prompt(format!(
 			"Are you sure you want to delete project {}",
-			project.name.purple()
+			project.name.purple().bold()
 		))
 		.default(false)
 		.wait_for_newline(true)
@@ -72,9 +74,21 @@ pub async fn command(args: Args) -> super::CommandResult {
 			config.root_config.projects.remove(&key);
 			config.write().await?;
 		}
-		println!("🗑️  Deleted project {}", project.name.purple());
+
+		let client = GQLClient::new_authorized(&config)?;
+		let res = post_graphql::<DeleteProject, _>(
+			&client,
+			format!("{}/graphql", Configs::get_host()),
+			delete_project::Variables {
+				project_id: project.id.clone(),
+			},
+		)
+		.await?;
+		res.data.ok_or("Failed to retrieve response body")?;
+
+		println!("🗑️  Deleted project {}", project.name.purple().bold());
 	} else {
-		println!("Not deleting project {}", project.name.purple());
+		println!("Not deleting project {}", project.name.purple().bold());
 	}
 	// let path = std::env::current_dir()?.to_string_lossy().into_owned();
 	// let project_id = project.id.clone();
