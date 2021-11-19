@@ -16,9 +16,7 @@ pub async fn command(_args: Args) -> super::CommandResult {
 	let res = post_graphql::<GetProject, _>(
 		&client,
 		format!("{}/graphql", Configs::get_host()),
-		get_project::Variables {
-			project_id,
-		},
+		get_project::Variables { project_id },
 	)
 	.await?;
 	let body: get_project::ResponseData = res.data.ok_or("Failed to retrieve response body")?;
