@@ -4,6 +4,7 @@ use backtrace::Backtrace;
 use colored::Colorize;
 use gzp::GzpError;
 use reqwest::header::InvalidHeaderValue;
+use tokio::task::JoinError;
 
 #[derive(Debug)]
 pub enum RailwayError {
@@ -15,6 +16,7 @@ pub enum RailwayError {
 	GzpError(GzpError),
 	InvalidHeaderValue(InvalidHeaderValue),
 	VarError(VarError),
+	JoinError(JoinError),
 	ProjectNotFound,
 	EnvironmentNotFound,
 	NotLinked,
@@ -42,6 +44,7 @@ impl Display for RailwayError {
 				invalid_header_value_error.fmt(f)
 			}
 			Self::VarError(var_error) => var_error.fmt(f),
+			Self::JoinError(join_error) => join_error.fmt(f),
 			Self::ProjectNotFound => {
 				write!(f, "{} Tip If you haven't, do railway login\nOtherwise, run {}  to get plugged into a new project, or {} to get plugged into an existing project.", "Project not found.".red(), "railway init".bold(), "railway link".bold())
 			}
@@ -71,6 +74,12 @@ impl From<std::io::Error> for RailwayError {
 impl From<VarError> for RailwayError {
 	fn from(err: VarError) -> Self {
 		RailwayError::VarError(err)
+	}
+}
+
+impl From<JoinError> for RailwayError {
+	fn from(err: JoinError) -> Self {
+		RailwayError::JoinError(err)
 	}
 }
 

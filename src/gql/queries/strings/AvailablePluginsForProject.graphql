@@ -1,0 +1,3 @@
+query AvailablePluginsForProject($projectId: ID!) {
+  availablePluginsForProject(projectId: $projectId)
+}

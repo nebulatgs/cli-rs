@@ -31,3 +31,11 @@ pub struct Logout;
 	response_derives = "Debug"
 )]
 pub struct DeleteProject;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+	schema_path = "src/gql/schema.graphql",
+	query_path = "src/gql/mutations/strings/CreatePlugin.graphql",
+	response_derives = "Debug"
+)]
+pub struct CreatePlugin;

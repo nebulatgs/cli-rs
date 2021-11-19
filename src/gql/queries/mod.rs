@@ -24,3 +24,11 @@ pub struct GetProjects;
 	response_derives = "Debug"
 )]
 pub struct GetProject;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+	schema_path = "src/gql/schema.graphql",
+	query_path = "src/gql/queries/strings/AvailablePluginsForProject.graphql",
+	response_derives = "Debug"
+)]
+pub struct AvailablePluginsForProject;

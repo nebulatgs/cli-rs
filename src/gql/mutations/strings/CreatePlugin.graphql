@@ -1,0 +1,6 @@
+mutation CreatePlugin ($projectId: String!, $name: String!) {
+  createPlugin(projectId: $projectId, name: $name) {
+    id
+    name
+  }
+}
