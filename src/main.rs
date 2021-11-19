@@ -2,7 +2,6 @@ pub mod commands;
 pub mod gql;
 pub mod util;
 
-use backtrace::Backtrace;
 use clap::{AppSettings, ColorChoice, Parser};
 use commands::*;
 
