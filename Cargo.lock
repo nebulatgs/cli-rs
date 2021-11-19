@@ -1089,6 +1089,7 @@ dependencies = [
 name = "railway"
 version = "0.2.0-alpha"
 dependencies = [
+ "backtrace",
  "base64",
  "chrono",
  "clap",

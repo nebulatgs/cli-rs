@@ -2,6 +2,7 @@ pub mod commands;
 pub mod gql;
 pub mod util;
 
+use backtrace::Backtrace;
 use clap::{AppSettings, ColorChoice, Parser};
 use commands::*;
 
@@ -110,6 +111,10 @@ async fn main() {
 				}
 				RailwayError::EnvironmentNotFound => {
 					eprintln!("{}", s)
+				}
+				RailwayError::Panic(err, _backtrace) => {
+					eprintln!("Unexpected Error! {}", err);
+					todo!("Send error back to HQ")
 				}
 				_ => {
 					eprintln!("Error in command \'{}\': {}", name, s)

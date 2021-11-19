@@ -36,11 +36,11 @@ pub struct Configs {
 impl Configs {
 	pub async fn new() -> super::UtilResult<Self> {
 		let mut root_config_partial_path = ".railway/config.json";
-		if Self::is_dev_mode().is_ok() {
+		if Self::is_dev_mode() {
 			root_config_partial_path = ".railway/dev-config.json";
 		}
 
-		if Self::is_staging_mode().is_ok() {
+		if Self::is_staging_mode() {
 			root_config_partial_path = ".railway/staging-config.json";
 		}
 
@@ -65,13 +65,17 @@ impl Configs {
 			},
 		})
 	}
-	pub fn is_staging_mode() -> super::UtilResult<bool> {
-		let env = std::env::var("RAILWAY_ENV")?;
-		Ok(env == "staging")
+	pub fn is_staging_mode() -> bool {
+		if let Ok(env) = std::env::var("RAILWAY_ENV") {
+			return env.eq_ignore_ascii_case("staging");
+		}
+		false
 	}
-	pub fn is_dev_mode() -> super::UtilResult<bool> {
-		let env = std::env::var("RAILWAY_ENV")?;
-		Ok(env == "develop")
+	pub fn is_dev_mode() -> bool {
+		if let Ok(env) = std::env::var("RAILWAY_ENV") {
+			return env.eq_ignore_ascii_case("develop");
+		}
+		false
 	}
 	pub fn get_railway_url() -> String {
 		std::env::var("RAILWAY_URL").unwrap_or_else(|_| super::consts::RAILWAY_URL.to_string())
@@ -81,11 +85,11 @@ impl Configs {
 	}
 	pub fn get_host() -> String {
 		let mut base_url = "https://backboard.railway.app";
-		if Self::is_dev_mode().is_ok() {
+		if Self::is_dev_mode() {
 			base_url = "https://backboard.railway-develop.app"
 		}
 
-		if Self::is_staging_mode().is_ok() {
+		if Self::is_staging_mode() {
 			base_url = "https://backboard.railway-staging.app"
 		}
 		base_url.to_string()

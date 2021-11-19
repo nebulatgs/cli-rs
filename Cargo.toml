@@ -28,6 +28,8 @@ dirs = "4.0.0"
 base64 = "0.13.0"
 colored = "2"
 chrono = {version = "0.4.19", features = ["serde"]}
+backtrace = "0.3.63"
+
 
 [profile.release]
 lto = true

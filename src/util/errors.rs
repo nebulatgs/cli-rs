@@ -1,5 +1,6 @@
 use std::{env::VarError, error::Error, fmt::Display};
 
+use backtrace::Backtrace;
 use colored::Colorize;
 use gzp::GzpError;
 use reqwest::header::InvalidHeaderValue;
@@ -18,7 +19,7 @@ pub enum RailwayError {
 	EnvironmentNotFound,
 	NotLinked,
 	String(&'static str),
-	Unknown(Box<dyn Error>),
+	Panic(Box<dyn Error>, String),
 }
 
 impl Display for RailwayError {
@@ -55,7 +56,7 @@ impl Display for RailwayError {
 				write!(f, "{}", "Not linked to a project!".red())
 			}
 			Self::String(string_error) => string_error.fmt(f),
-			Self::Unknown(err) => err.fmt(f),
+			Self::Panic(err, _) => err.fmt(f),
 		}
 	}
 }
@@ -105,7 +106,8 @@ impl From<InvalidHeaderValue> for RailwayError {
 
 impl From<Box<dyn Error>> for RailwayError {
 	fn from(err: Box<dyn Error>) -> Self {
-		RailwayError::Unknown(err)
+		let backtrace = format!("{:?}", Backtrace::new());
+		RailwayError::Panic(err, backtrace)
 	}
 }
 
