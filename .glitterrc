@@ -1,6 +1,12 @@
 {
     "custom_tasks": [
         {
+            "name": "sort",
+            "execute": [
+                "cargo sort"
+            ]
+        },
+        {
             "name": "fmt",
             "execute": [
                 "cargo fmt"
@@ -14,6 +20,7 @@
         }
     ],
     "hooks": [
+        "sort",
         "fmt",
         "lint"
     ]
