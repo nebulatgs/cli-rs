@@ -17,7 +17,7 @@ pub async fn command(_args: Args) -> super::CommandResult {
 		&client,
 		format!("{}/graphql", Configs::get_host()),
 		get_project::Variables {
-			project_id: project_id.into(),
+			project_id,
 		},
 	)
 	.await?;

@@ -2,7 +2,7 @@ use std::{collections::HashMap, path::PathBuf};
 
 use serde::{Deserialize, Serialize};
 use tokio::{
-	fs::File,
+	fs::{create_dir_all, File},
 	io::{AsyncReadExt, AsyncWriteExt},
 };
 
@@ -125,6 +125,7 @@ impl Configs {
 		Ok(project)
 	}
 	pub async fn write(&self) -> super::UtilResult<()> {
+		create_dir_all(self.root_config_path.parent().unwrap()).await?;
 		let mut file = File::create(&self.root_config_path).await?;
 		let serialized_config = serde_json::to_vec_pretty(&self.root_config)?;
 		file.write_buf(&mut serialized_config.as_slice()).await?;
