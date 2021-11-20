@@ -109,5 +109,8 @@ pub async fn command(args: Args) -> super::CommandResult {
 	tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
 	spinner_task.await?;
 	println!("☁️  Build logs available at {}", body.logs_url.dimmed());
+	if args.detach.is_some() {
+		return Ok(());
+	}
 	Ok(())
 }
