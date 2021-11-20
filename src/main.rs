@@ -1,4 +1,5 @@
 pub mod commands;
+pub mod entity;
 pub mod gql;
 pub mod util;
 

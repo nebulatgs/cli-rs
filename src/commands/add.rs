@@ -1,10 +1,6 @@
-use std::time::Duration;
-
 use clap::Parser;
 use colored::Colorize;
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
-use indicatif::{ProgressBar, ProgressStyle};
-use tokio::{spawn, sync::oneshot, time::sleep};
 
 use crate::{
 	gql::{
@@ -14,7 +10,7 @@ use crate::{
 	util::{
 		client::{post_graphql, GQLClient},
 		config::Configs,
-		consts,
+		spinner::create_spinner,
 	},
 };
 
@@ -44,20 +40,8 @@ pub async fn command(_args: Args) -> super::CommandResult {
 		.items(plugins.as_slice())
 		.interact()?;
 	let plugin_name = plugins[selection].cyan().bold();
-	let spinner = ProgressBar::new_spinner()
-		.with_style(ProgressStyle::default_spinner().tick_chars(&consts::TRAIN_EMOJIS.concat()))
-		.with_message(format!("Adding {} plugin", plugin_name));
-	let (tx, mut rx) = oneshot::channel::<bool>();
-	let spinner_task = spawn(async move {
-		loop {
-			spinner.tick();
-			sleep(Duration::from_millis(60)).await;
-			if rx.try_recv().is_ok() {
-				break;
-			}
-		}
-		spinner.finish();
-	});
+
+	let (tx, spinner_task) = create_spinner(format!("Adding {} plugin", plugin_name), false);
 
 	let config = Configs::new().await?;
 	let linked_project = config.get_linked_project()?;

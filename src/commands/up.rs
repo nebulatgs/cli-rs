@@ -1,4 +1,5 @@
 use clap::Parser;
+use colored::Colorize;
 use ignore::WalkBuilder;
 use std::sync::{Arc, Mutex};
 use synchronized_writer::SynchronizedWriter;
@@ -8,9 +9,16 @@ use indicatif::{ProgressBar, ProgressIterator, ProgressStyle};
 use tar::Builder;
 
 use crate::{
+	entity::up::UpResponse,
 	gql::queries::get_project,
 	gql::queries::GetProject,
-	util::{client::post_graphql, client::GQLClient, config::Configs, errors::RailwayError},
+	util::{
+		client::post_graphql,
+		client::GQLClient,
+		config::Configs,
+		errors::RailwayError,
+		spinner::{create_spinner, create_spinner_with_chars},
+	},
 };
 
 #[derive(Parser)]
@@ -56,6 +64,9 @@ pub async fn command(args: Args) -> super::CommandResult {
 			.id;
 	}
 
+	let (tx, spinner_task) =
+		create_spinner_with_chars("Indexing".cyan().bold().to_string(), true, "/-\\|");
+
 	let bytes = Vec::<u8>::new();
 	let arc = Arc::new(Mutex::new(bytes));
 	let mut parz = ZBuilder::<Gzip, _>::new()
@@ -66,11 +77,13 @@ pub async fn command(args: Args) -> super::CommandResult {
 		let mut builder = WalkBuilder::new(args.path.unwrap_or_else(|| ".".to_string()));
 		let walker = builder.follow_links(true).hidden(false);
 		let walked = walker.build().collect::<Vec<_>>();
+		tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
+		spinner_task.await?;
 		let pg = ProgressBar::new(walked.len() as u64).with_message("Compressing");
 		pg.enable_steady_tick(100);
 		pg.set_style(
 			ProgressStyle::default_bar()
-				.template("    {msg:.cyan} [{bar:20}] {percent}% {spinner}")
+				.template("  {msg:.cyan.bold} [{bar:20}] {percent}% {spinner}")
 				.progress_chars("=> ")
 				.tick_chars("/-\\|"),
 		);
@@ -79,6 +92,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 		}
 	}
 	parz.finish()?;
+	let (tx, spinner_task) = create_spinner("Laying tracks in the clouds...".to_string(), false);
 	let client = GQLClient::new_authorized(&config)?;
 	let builder = client.post(format!(
 		"https://backboard.railway.app/project/{}/environment/{}/up",
@@ -91,5 +105,9 @@ pub async fn command(args: Args) -> super::CommandResult {
 		.send()
 		.await?
 		.error_for_status()?;
+	let body = res.json::<UpResponse>().await?;
+	tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
+	spinner_task.await?;
+	println!("☁️  Build logs available at {}", body.logs_url.dimmed());
 	Ok(())
 }
