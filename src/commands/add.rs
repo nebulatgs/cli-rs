@@ -41,7 +41,7 @@ pub async fn command(_args: Args) -> super::CommandResult {
 		.interact()?;
 	let plugin_name = plugins[selection].cyan().bold();
 
-	let (tx, spinner_task) = create_spinner(format!("Adding {} plugin", plugin_name), false);
+	let (token, spinner_task) = create_spinner(format!("Adding {} plugin", plugin_name), false);
 
 	let config = Configs::new().await?;
 	let linked_project = config.get_linked_project()?;
@@ -56,7 +56,7 @@ pub async fn command(_args: Args) -> super::CommandResult {
 	)
 	.await?;
 	res.data.ok_or("Failed to retrieve response body")?;
-	tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
+	token.cancel();
 	spinner_task.await?;
 	println!("🎉 Created plugin {}", plugin_name);
 	Ok(())

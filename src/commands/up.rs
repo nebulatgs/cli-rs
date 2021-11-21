@@ -64,7 +64,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 			.id;
 	}
 
-	let (tx, spinner_task) =
+	let (token, spinner_task) =
 		create_spinner_with_chars("Indexing".cyan().bold().to_string(), true, "/-\\|");
 
 	let bytes = Vec::<u8>::new();
@@ -77,7 +77,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 		let mut builder = WalkBuilder::new(args.path.unwrap_or_else(|| ".".to_string()));
 		let walker = builder.follow_links(true).hidden(false);
 		let walked = walker.build().collect::<Vec<_>>();
-		tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
+		token.cancel();
 		spinner_task.await?;
 		let pg = ProgressBar::new(walked.len() as u64).with_message("Compressing");
 		pg.enable_steady_tick(100);
@@ -92,7 +92,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 		}
 	}
 	parz.finish()?;
-	let (tx, spinner_task) = create_spinner("Laying tracks in the clouds...".to_string(), false);
+	let (token, spinner_task) = create_spinner("Laying tracks in the clouds...".to_string(), false);
 	let client = GQLClient::new_authorized(&config)?;
 	let builder = client.post(format!(
 		"https://backboard.railway.app/project/{}/environment/{}/up",
@@ -106,7 +106,7 @@ pub async fn command(args: Args) -> super::CommandResult {
 		.await?
 		.error_for_status()?;
 	let body = res.json::<UpResponse>().await?;
-	tx.send(true).ok().ok_or("Failed to shutdown spinner")?;
+	token.cancel();
 	spinner_task.await?;
 	println!("☁️  Build logs available at {}", body.logs_url.dimmed());
 	if args.detach.is_some() {
