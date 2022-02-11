@@ -33,7 +33,7 @@ serde_json = "1.0.74"
 synchronized-writer = "1.1.10"
 tar = "0.4.38"
 tokio = { version = "1.15.0", features = ["full"] }
-tokio-util = "0.6.9"
+tokio-util = "0.7.0"
 
 [profile.dev.package."*"]
 opt-level = 3
